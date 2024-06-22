@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -27,12 +27,6 @@ return new class extends Migration {
             $table->boolean('is_in_val_system')
                 ->default(false);
             $table->timestampsTz();
-        });
-
-        Schema::create('currencies', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('short_name');
         });
 
         Schema::table('users', function (Blueprint $table) {
@@ -119,4 +113,5 @@ return new class extends Migration {
                 ->on('currencies');
         });
     }
+
 };
