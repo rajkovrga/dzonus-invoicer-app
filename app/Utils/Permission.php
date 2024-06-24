@@ -8,25 +8,25 @@ class Permission
     public const ViewAllUsers = 'view all users';
     public const ViewUsers = 'view users';
     public const CreateUser = 'create users';
-    public const CreateEmployeeUser = 'create employee user';
+    public const CreateEmployeeUserRelation = 'create employee user relation';
+    public const DeleteEmployeeUserRelation = 'edit employee user';
     public const EditUser = 'edit user';
     public const DeleteUser = 'delete user';
 
     //invoices
     public const ViewAllInvoices = 'view all invoices';
     public const ViewInvoices = 'view invoices';
+    public const CreateInvoice = 'create invoice';
     public const EditInvoice = 'edit invoice';
     public const DeleteInvoice = 'delete invoice';
 
     //company
 
     public const ViewAllCompanies = 'view all companies';
-    public const ViewCompanies = 'view companies';
     public const EditCompany = 'edit company';
     public const DeleteCompany = 'delete company';
 
     //currencies
-    public const ViewAllCurrencies = 'view all currencies';
     public const ViewCurrencies = 'view currencies';
     public const EditCurrency = 'edit currency';
     public const DeleteCurrency = 'delete currency';
@@ -37,13 +37,14 @@ class Permission
     public const ViewBankAccounts = 'view bank accounts';
     public const EditBankAccount = 'edit bank account';
     public const DeleteBankAccount = 'delete bank account';
+    public const DeleteAllBankAccount = 'delete all bank account';
 
     //company draft
 
-    public const ViewAllCompanyDrafts = 'view all company drafts';
-    public const ViewCompanyDrafts = 'view company drafts';
-    public const EditCompanyDraft = 'edit company draft';
-    public const DeleteCompanyDraft = 'delete company draft';
+    public const ViewAllCompanyEmailDrafts = 'view all company drafts';
+    public const ViewCompanyEmailDrafts = 'view company drafts';
+    public const EditCompanyEmailDraft = 'edit company draft';
+    public const DeleteCompanyEmailDraft = 'delete company draft';
 
     //clients
 
@@ -54,13 +55,13 @@ class Permission
     public const DeleteCompanyClient = 'delete company client';
     public const DeleteCompanyClientRelation = 'delete company client relation';
 
-    public static function all()
+    public static function all(): array
     {
         return [
             self::ViewAllUsers,
             self::ViewUsers,
             self::CreateUser,
-            self::CreateEmployeeUser,
+            self::CreateEmployeeUserRelation,
             self::EditUser,
             self::DeleteUser,
             self::ViewAllInvoices,
@@ -68,10 +69,8 @@ class Permission
             self::EditInvoice,
             self::DeleteInvoice,
             self::ViewAllCompanies,
-            self::ViewCompanies,
             self::EditCompany,
             self::DeleteCompany,
-            self::ViewAllCurrencies,
             self::ViewCurrencies,
             self::EditCurrency,
             self::DeleteCurrency,
@@ -79,16 +78,19 @@ class Permission
             self::ViewBankAccounts,
             self::EditBankAccount,
             self::DeleteBankAccount,
-            self::ViewAllCompanyDrafts,
-            self::ViewCompanyDrafts,
-            self::EditCompanyDraft,
-            self::DeleteCompanyDraft,
+            self::ViewAllCompanyEmailDrafts,
+            self::ViewCompanyEmailDrafts,
+            self::EditCompanyEmailDraft,
+            self::DeleteCompanyEmailDraft,
             self::ViewAllClients,
             self::ViewCompanyClients,
             self::EditCompanyClients,
             self::EditAllClients,
             self::DeleteCompanyClient,
-            self::DeleteCompanyClientRelation
+            self::DeleteCompanyClientRelation,
+            self::DeleteAllBankAccount,
+            self::DeleteEmployeeUserRelation,
+            self::CreateInvoice
         ];
     }
 }
