@@ -20,10 +20,13 @@ return new class extends Migration
             $table->string('vat_id');
             $table->string('registration_number')
                 ->nullable();
+            $table->string('stamp_url')
+                ->nullable();
             $table->string('tax_id')
                 ->nullable();
             $table->string('email')
                 ->nullable();
+            $table->dateTimeTz('registration_date');
             $table->boolean('is_in_val_system')
                 ->default(false);
             $table->timestampsTz();
@@ -33,13 +36,9 @@ return new class extends Migration
             $table->foreignId('company_id')
                 ->references('id')
                 ->on('clients');
-            $table->foreignId('currency_id')
-                ->nullable()
-                ->references('id')
-                ->on('currencies');
         });
 
-        Schema::create('user_clients', function (Blueprint $table) {
+        Schema::create('client_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')
                 ->references('id')
@@ -52,7 +51,7 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('user_bank_accounts', function (Blueprint $table) {
+        Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')
                 ->references('id')
@@ -78,6 +77,9 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users');
+            $table->foreignId('company_id')
+                ->references('id')
+                ->on('clients');
             $table->timestampsTz();
         });
 
@@ -101,12 +103,12 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('email_company_drafts', function (Blueprint $table) {
+        Schema::create('company_drafts', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->foreignId('user_id')
+            $table->foreignId('company_id')
                 ->references('id')
-                ->on('users');
+                ->on('clients');
             $table->foreignId('currency_id')
                 ->nullable()
                 ->references('id')
