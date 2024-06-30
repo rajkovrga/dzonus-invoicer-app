@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'email' => 'rajko@vrga.dev',
             'first_name' => 'Rajko',
             'last_name' => 'Vrga',
-            'password' => '',
+            'password' => '12345',
             'company_id' => $client->id,
             'email_verified_at' => now(),
         ]);
