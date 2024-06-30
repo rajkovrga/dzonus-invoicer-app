@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('vat_id');
+            $table->string('phone')->nullable();
             $table->string('registration_number')
                 ->nullable();
             $table->string('stamp_url')
@@ -36,6 +37,8 @@ return new class extends Migration
             $table->foreignId('company_id')
                 ->references('id')
                 ->on('clients');
+            $table->string('first_name');
+            $table->string('last_name');
         });
 
         Schema::create('client_users', function (Blueprint $table) {
