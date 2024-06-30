@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,7 +18,10 @@ return new class extends Migration
             $table->string('address');
             $table->string('vat_id');
             $table->string('phone')->nullable();
-            $table->string('registration_number')
+            $table->string('registration_number');
+            $table->string('logo_url')
+                ->nullable();
+            $table->string('global_email_draft')
                 ->nullable();
             $table->string('stamp_url')
                 ->nullable();
@@ -28,8 +30,10 @@ return new class extends Migration
             $table->string('email')
                 ->nullable();
             $table->dateTimeTz('registration_date');
-            $table->boolean('is_in_val_system')
-                ->default(false);
+            $table->string('registration_agent')
+                ->nullable();
+            $table->boolean('is_active')
+                ->default(true);
             $table->timestampsTz();
         });
 
@@ -41,14 +45,14 @@ return new class extends Migration
             $table->string('last_name');
         });
 
-        Schema::create('client_users', function (Blueprint $table) {
+        Schema::create('company_clients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')
                 ->references('id')
                 ->on('clients');
-            $table->foreignId('user_id')
+            $table->foreignId('company_id')
                 ->references('id')
-                ->on('users');
+                ->on('clients');
             $table->string('contract_url')
                 ->nullable();
             $table->timestampsTz();
@@ -65,7 +69,7 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        DB::statement('ALTER TABLE user_bank_accounts ADD CONSTRAINT check_bank_account_fields
+        DB::statement('ALTER TABLE bank_accounts ADD CONSTRAINT check_bank_account_fields
     CHECK (
         (swift IS NOT NULL AND iban IS NOT NULL AND number IS NULL) OR
         (swift IS NULL AND iban IS NULL AND number IS NOT NULL)
@@ -80,9 +84,13 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users');
-            $table->foreignId('company_id')
+            $table->foreignId('client_id')
                 ->references('id')
                 ->on('clients');
+            $table->foreignId('currency_id')
+                ->nullable()
+                ->references('id')
+                ->on('currencies');
             $table->timestampsTz();
         });
 
@@ -100,7 +108,7 @@ return new class extends Migration
             $table->foreignId('invoice_id')
                 ->references('id')
                 ->on('invoices');
-            $table->mediumInteger('price');
+            $table->bigInteger('price');
             $table->integer('quantity')
                 ->default(1);
             $table->timestampsTz();
