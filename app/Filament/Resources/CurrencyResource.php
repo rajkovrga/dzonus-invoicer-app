@@ -23,20 +23,16 @@ class CurrencyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('arabic')
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('iso')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('exchange_rate')
-                    ->numeric(),
                 Forms\Components\TextInput::make('symbol')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('translations'),
-                Forms\Components\Toggle::make('is_activated'),
+                Forms\Components\Toggle::make('is_activated')
+                    ->default(true),
             ]);
     }
 
@@ -44,25 +40,16 @@ class CurrencyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('arabic')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iso')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('symbol')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('exchange_rate')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('symbol')
-                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_activated')
                     ->boolean(),
             ])
