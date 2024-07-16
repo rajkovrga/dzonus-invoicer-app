@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -74,7 +72,6 @@ class User extends Authenticatable implements HasAvatar, MustVerifyEmail, Should
     {
         return $this->belongsTo(Client::class, 'company_id', 'id');
     }
-
 
     public function canAccessPanel(Panel $panel): bool
     {

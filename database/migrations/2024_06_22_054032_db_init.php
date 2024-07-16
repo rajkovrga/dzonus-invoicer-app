@@ -13,12 +13,14 @@ return new class extends Migration {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('country');
-            $table->string('city');
             $table->string('address');
             $table->string('vat_id');
             $table->string('phone')->nullable();
             $table->string('registration_number');
+            $table->foreignId('owner_id')
+                ->nullable()
+                ->references('id')
+                ->on('users');
             $table->string('logo_url')
                 ->nullable();
             $table->string('global_email_draft')
@@ -26,8 +28,6 @@ return new class extends Migration {
             $table->string('stamp_url')
                 ->nullable();
             $table->string('tax_id')
-                ->nullable();
-            $table->string('email')
                 ->nullable();
             $table->dateTimeTz('registration_date');
             $table->string('registration_agent')
