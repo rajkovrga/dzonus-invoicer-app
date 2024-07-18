@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->string('address');
             $table->string('vat_id');
             $table->string('phone')->nullable();
-            $table->string('registration_number');
+            $table->string('registration_number')
+                ->unique();
             $table->foreignId('owner_id')
                 ->nullable()
                 ->references('id')
@@ -28,9 +29,11 @@ return new class extends Migration {
             $table->string('stamp_url')
                 ->nullable();
             $table->string('tax_id')
+                ->unique()
                 ->nullable();
             $table->dateTimeTz('registration_date');
             $table->string('registration_agent')
+                ->unique()
                 ->nullable();
             $table->boolean('is_active')
                 ->default(true);
