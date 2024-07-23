@@ -1,0 +1,13 @@
+[324439] Log opened at 2024-07-23 11:22:37.049231
+[324439] [Config] INFO: Control socket set up succesfully: '@xdebug-ctrl.324439'
+[324439] [Step Debug] INFO: Checking for client discovery headers: 'HTTP_X_FORWARDED_FOR,REMOTE_ADDR'.
+[324439] [Step Debug] INFO: Checking header 'HTTP_X_FORWARDED_FOR'.
+[324439] [Step Debug] INFO: Checking header 'REMOTE_ADDR'.
+[324439] [Step Debug] WARN: Could not discover client host through HTTP headers, connecting to configured address/port: localhost:9003.
+[324439] [Step Debug] INFO: Connected to debugging client: localhost:9003 (fallback through xdebug.client_host/xdebug.client_port).
+[324439] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///home/vrgadev/projects/dzonus-invoicer-app/artisan" language="PHP" xdebug:language_version="8.1.28" protocol_version="1.0" appid="324439" idekey="PHPSTORM"><engine version="3.3.2"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2024 by Derick Rethans]]></copyright></init>
+
+[324439] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[324439] Log closed at 2024-07-23 11:22:37.076186
+

@@ -19,17 +19,14 @@ class UserSeeder extends Seeder
         $client = Client::create([
             'name' => 'Rajko Vrga PR Informacione usluge Vrga DEV Beograd (Zemun)',
             'address' => 'Episkopa Nikolaja 11/25',
-            'city' => 'Beograd',
-            'country' => 'Srbija',
             'phone' => '+381 63 123 456',
-            'email' => 'rajko@vrga.dev',
             'vat_id' => '113460262',
             'registration_number' => '66841251',
             'registration_date' => Carbon::create('2022', '12', '29')
                 ->toString(),
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => 'rajkovrga',
             'email' => 'rajko@vrga.dev',
             'first_name' => 'Rajko',
@@ -38,6 +35,8 @@ class UserSeeder extends Seeder
             'company_id' => $client->id,
             'email_verified_at' => now(),
         ]);
+        $client->owner_id = $user->id;
+        $client->save();
 
         User::factory()
             ->count(1000)
