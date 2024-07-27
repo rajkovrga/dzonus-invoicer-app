@@ -3,8 +3,10 @@
 namespace App\Filament\Pages;
 
 use App\Models\Client;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Infolist;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -50,14 +52,69 @@ class CompanyManage extends Page
         $this->handleRecordUpdate($this->record, $data);
     }
 
-    public function form(Form $form): Form
+    public function infolist(Infolist $infolist): Infolist
     {
-        return $form
-            ->live()
+        return $infolist
             ->schema([
-                TextEntry::make('name'),
+                Section::make('Company Info')
+                    ->description('Basic company information.')
+                    ->schema([
+                        Infolists\Components\ImageEntry::make('logo_url')
+                            ->label('Logo Company')
+                            ->circular()
+                            ->default('https://dummyimage.com/300x300/000000/ffffff&text=logo'),
+                        Infolists\Components\TextEntry::make('name')
+                            ->label('Company Name'),
+                        Infolists\Components\IconEntry::make('active')
+                            ->boolean(),
+
+                        Infolists\Components\TextEntry::make('address'),
+                        Infolists\Components\TextEntry::make('vat_id'),
+                        Infolists\Components\TextEntry::make('registration_number'),
+                        Infolists\Components\TextEntry::make('tax_id'),
+                    ]),
+
+                Section::make('Contact info')
+                    ->description('Company contact details.')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('phone'),
+                        Infolists\Components\TextEntry::make('company email'),
+                    ]),
+                Section::make('Registration info')
+                    ->description('Company register details.')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('owner name'),
+                        Infolists\Components\TextEntry::make('registration_date'),
+                        Infolists\Components\TextEntry::make('registratin_agent'),
+                        ]),
+                Section::make('Drafts')
+                    ->description('Drafts about bussiness stuffs')
+                    ->schema([
+                        Infolists\Components\ImageEntry::make('stamp_url')
+                            ->label('Stamp Company')
+                            ->circular()
+                            ->default('https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
+                        Infolists\Components\TextEntry::make('Email global draft')
+                    ]),
+
+
             ])
-            ->model($this->record);
+            ->state([
+                'name' => $this->record?->name ?? '',
+                'address' => $this->record?->address ?? '',
+                'vat_id' => $this->record?->vat_id ?? '',
+                'logo_url' => $this->record?->logo_url ?? '',
+                'phone' => $this->record?->phone ?? 'None',
+                'registration_number' => $this->record?->registration_number ?? '',
+                'company email' => $this->record?->owner->email ?? '',
+                'owner name' => $this->record?->owner->first_name . ' ' . $this->record?->owner->last_name ?? '',
+                'registration_date' => $this->record?->registration_date ?? '',
+                'tax_id' => $this->record?->tax_id ?? 'None',
+                'registratin_agent' => $this->record?->registration_agent ?? 'None',
+                'stamp_url' => $this->record?->stamp_url ?? '',
+                'active' => $this->record?->is_active ?? '',
+                'Email global draft' => $this->record?->global_email_draft ?? 'None',
+            ]);
     }
 
 }
