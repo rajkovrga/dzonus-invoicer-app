@@ -14,7 +14,7 @@ class CompanyManage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.company-manage';
+    protected static string $view = 'filament.pages.company-manage.info';
     protected static ?string $navigationGroup = 'Settings';
 
     public ?Client $record = null;
