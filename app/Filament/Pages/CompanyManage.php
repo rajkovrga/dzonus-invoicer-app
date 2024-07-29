@@ -4,7 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Client;
 use Filament\Infolists;
-use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Infolist;
 use Filament\Pages\Page;
@@ -72,21 +72,39 @@ class CompanyManage extends Page
                         Infolists\Components\TextEntry::make('vat_id'),
                         Infolists\Components\TextEntry::make('registration_number'),
                         Infolists\Components\TextEntry::make('tax_id'),
+                    ])
+                    ->headerActions([
+                        Action::make('Edit')
+                            ->action(function () {
+                                // ...
+                            }),
                     ]),
 
                 Section::make('Contact info')
                     ->description('Company contact details.')
                     ->schema([
-                        Infolists\Components\TextEntry::make('phone'),
+                        Infolists\Components\TextEntry::make('owner name'),
                         Infolists\Components\TextEntry::make('company email'),
+                        Infolists\Components\TextEntry::make('phone'),
+                    ])
+                    ->headerActions([
+                        Action::make('Edit')
+                            ->action(function () {
+                                // ...
+                            }),
                     ]),
                 Section::make('Registration info')
                     ->description('Company register details.')
                     ->schema([
-                        Infolists\Components\TextEntry::make('owner name'),
                         Infolists\Components\TextEntry::make('registration_date'),
-                        Infolists\Components\TextEntry::make('registratin_agent'),
-                        ]),
+                        Infolists\Components\TextEntry::make('registration_agent'),
+                        ])
+                    ->headerActions([
+                        Action::make('Edit')
+                            ->action(function () {
+                                
+                            }),
+                    ]),
                 Section::make('Drafts')
                     ->description('Drafts about bussiness stuffs')
                     ->schema([
@@ -95,6 +113,12 @@ class CompanyManage extends Page
                             ->circular()
                             ->default('https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
                         Infolists\Components\TextEntry::make('Email global draft')
+                    ])
+                    ->headerActions([
+                        Action::make('Edit')
+                            ->action(function () {
+                                // ...
+                            }),
                     ]),
 
 
@@ -110,7 +134,7 @@ class CompanyManage extends Page
                 'owner name' => $this->record?->owner->first_name . ' ' . $this->record?->owner->last_name ?? '',
                 'registration_date' => $this->record?->registration_date ?? '',
                 'tax_id' => $this->record?->tax_id ?? 'None',
-                'registratin_agent' => $this->record?->registration_agent ?? 'None',
+                'registration_agent' => $this->record?->registration_agent ?? 'None',
                 'stamp_url' => $this->record?->stamp_url ?? '',
                 'active' => $this->record?->is_active ?? '',
                 'Email global draft' => $this->record?->global_email_draft ?? 'None',
