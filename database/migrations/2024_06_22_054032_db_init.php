@@ -24,7 +24,7 @@ return new class extends Migration {
                 ->on('users');
             $table->string('logo_url')
                 ->nullable();
-            $table->string('global_email_draft')
+            $table->text('global_email_draft')
                 ->nullable();
             $table->string('stamp_url')
                 ->nullable();
@@ -119,7 +119,7 @@ return new class extends Migration {
 
         Schema::create('company_drafts', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->text('description');
             $table->foreignId('company_id')
                 ->references('id')
                 ->on('clients');

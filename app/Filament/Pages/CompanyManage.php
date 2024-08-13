@@ -3,12 +3,17 @@
 namespace App\Filament\Pages;
 
 use App\Models\Client;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Infolist;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
+use Filament\Infolists\Components\IconEntry;
 
 class CompanyManage extends Page
 {
@@ -65,18 +70,44 @@ class CompanyManage extends Page
                             ->default('https://dummyimage.com/300x300/000000/ffffff&text=logo'),
                         Infolists\Components\TextEntry::make('name')
                             ->label('Company Name'),
-                        Infolists\Components\IconEntry::make('active')
-                            ->boolean(),
-
+                        IconEntry::make('is_active')
+                            ->getStateUsing(function () {
+                                return (bool) $this->record->is_active;
+                            })
+                            ->label('Active')
+                        ->boolean(),
                         Infolists\Components\TextEntry::make('address'),
                         Infolists\Components\TextEntry::make('vat_id'),
                         Infolists\Components\TextEntry::make('registration_number'),
                         Infolists\Components\TextEntry::make('tax_id'),
                     ])
                     ->headerActions([
-                        Action::make('Edit')
-                            ->action(function () {
-                                // ...
+                        Action::make('edit')
+                            ->form([
+                                FileUpload::make('logo_url')
+                                    ->label('Logo Company')
+                                    ->default('https://dummyimage.com/300x300/000000/ffffff&text=logo'),
+                                TextInput::make('name')
+                                    ->label('Company Name')
+                                    ->default($this->record?->name),
+                                Toggle::make('is_active')
+                                    ->default($this->record?->is_active)
+                                    ->label('Active'),
+                                TextInput::make('address')
+                                    ->label('Address')
+                                    ->default($this->record?->address),
+                                TextInput::make('vat_id')
+                                    ->label('VAT ID')
+                                    ->default($this->record?->vat_id),
+                                TextInput::make('registration_number')
+                                    ->label('Registration Number')
+                                    ->default($this->record?->registration_number),
+                                TextInput::make('tax_id')
+                                    ->label('Tax ID')
+                                    ->default($this->record?->tax_id),
+                            ])
+                            ->action(function (array $data) {
+                                $this->record->update($data);
                             }),
                     ]),
 
@@ -88,9 +119,13 @@ class CompanyManage extends Page
                         Infolists\Components\TextEntry::make('phone'),
                     ])
                     ->headerActions([
-                        Action::make('Edit')
-                            ->action(function () {
-                                // ...
+                        Action::make('edit')
+                            ->form([
+                                TextInput::make('phone')
+                                    ->default($this->record?->phone),
+                            ])
+                            ->action(function (array $data) {
+                                $this->record->update($data);
                             }),
                     ]),
                 Section::make('Registration info')
@@ -98,11 +133,15 @@ class CompanyManage extends Page
                     ->schema([
                         Infolists\Components\TextEntry::make('registration_date'),
                         Infolists\Components\TextEntry::make('registration_agent'),
-                        ])
+                    ])
                     ->headerActions([
-                        Action::make('Edit')
-                            ->action(function () {
-                                
+                        Action::make('edit')
+                            ->form([
+                                TextInput::make('registration_agent')
+                                    ->default($this->record?->registration_agent),
+                            ])
+                            ->action(function (array $data) {
+                                $this->record->update($data);
                             }),
                     ]),
                 Section::make('Drafts')
@@ -111,17 +150,24 @@ class CompanyManage extends Page
                         Infolists\Components\ImageEntry::make('stamp_url')
                             ->label('Stamp Company')
                             ->circular()
-                            ->default('https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
-                        Infolists\Components\TextEntry::make('Email global draft')
+                            ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
+                        Infolists\Components\TextEntry::make('global_email_draft')
+                            ->html()
+                            ->default($this->record?->global_email_draft)
                     ])
                     ->headerActions([
-                        Action::make('Edit')
-                            ->action(function () {
-                                // ...
+                        Action::make('edit')
+                            ->form([
+                                FileUpload::make('stamp_url')
+                                    ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp')
+                                    ->image(),
+                                RichEditor::make('global_email_draft')
+                                ->default($this->record?->global_email_draft)
+                            ])
+                            ->action(function (array $data) {
+                                $this->record->update($data);
                             }),
                     ]),
-
-
             ])
             ->state([
                 'name' => $this->record?->name ?? '',
@@ -140,5 +186,4 @@ class CompanyManage extends Page
                 'Email global draft' => $this->record?->global_email_draft ?? 'None',
             ]);
     }
-
 }

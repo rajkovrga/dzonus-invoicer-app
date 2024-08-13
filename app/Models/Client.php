@@ -12,6 +12,9 @@ class Client extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
     protected $fillable = [
         'name',
         'address',
@@ -21,7 +24,11 @@ class Client extends Model
         'registration_number',
         'registration_date',
         'tax_id',
-        'registration_agent'
+        'registration_agent',
+        'global_email_draft',
+        'stamp_url',
+        'logo_url',
+        'is_active'
     ];
 
     public function bankAccounts(): HasMany
