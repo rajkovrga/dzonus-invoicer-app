@@ -87,6 +87,9 @@ return new class extends Migration {
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users');
+            $table->foreignId('company_id')
+                ->references('id')
+                ->on('clients');
             $table->foreignId('client_id')
                 ->references('id')
                 ->on('clients');

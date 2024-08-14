@@ -5,10 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Models\Invoice;
+use App\Repositories\InvoiceRepository;
+use App\Tables\Columns\InvoiceNumber;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -16,15 +20,18 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
+        $invoiceRepository = app(InvoiceRepository::class);
+        $nextInvoiceNumber = $invoiceRepository->getNextInvoiceNumber(auth()->user());
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('invoice_number')
                     ->required()
+                    ->default($nextInvoiceNumber)
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('dated')
                     ->required(),
@@ -46,14 +53,12 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('invoice_number')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('dated')
-                    ->dateTime()
-                    ->sortable(),
+                InvoiceNumber::make('invoice_number')
+                ->state(function (Invoice $record) {
+                    return $record->invoice_number . '/' . Carbon::make($record->dated)->format('Y');
+                }),
                 Tables\Columns\TextColumn::make('value_date')
-                    ->dateTime()
+                    ->dateTime('d.m.Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('trading_place')
                     ->searchable(),
@@ -63,7 +68,7 @@ class InvoiceResource extends Resource
                 Tables\Columns\TextColumn::make('client.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('currency_id')
+                Tables\Columns\TextColumn::make('currency.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -88,7 +93,6 @@ class InvoiceResource extends Resource
                 ]),
             ]);
     }
-
 
     public static function getRelations(): array
     {

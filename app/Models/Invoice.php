@@ -19,6 +19,7 @@ class Invoice extends Model
       'invoice_number',
       'trading_place',
       'dated',
+      'company_id'
     ];
 
     public function invoiceItems(): HasMany {
@@ -28,6 +29,11 @@ class Invoice extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_id', 'id');
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Client::class, 'company_id', 'id');
     }
 
     public function user(): BelongsTo
