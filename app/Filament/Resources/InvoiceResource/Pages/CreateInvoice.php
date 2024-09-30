@@ -22,10 +22,7 @@ class CreateInvoice extends CreateRecord
     protected function getFormSchema(): array
     {
         return [
-            TextEntry::make('message')
-                ->label('')
-                ->content('Hello World'),
-            // Other form fields...
+
         ];
     }
 }
