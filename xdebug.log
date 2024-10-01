@@ -11,3 +11,42 @@
 
 [324439] Log closed at 2024-07-23 11:22:37.076186
 
+[1089864] Log opened at 2024-10-01 13:17:34.061427
+[1089864] [Config] INFO: Control socket set up succesfully: '@xdebug-ctrl.1089864'
+[1089864] [Step Debug] INFO: Checking for client discovery headers: 'HTTP_X_FORWARDED_FOR,REMOTE_ADDR'.
+[1089864] [Step Debug] INFO: Checking header 'HTTP_X_FORWARDED_FOR'.
+[1089864] [Step Debug] INFO: Checking header 'REMOTE_ADDR'.
+[1089864] [Step Debug] WARN: Could not discover client host through HTTP headers, connecting to configured address/port: localhost:9003.
+[1089864] [Step Debug] INFO: Connected to debugging client: localhost:9003 (fallback through xdebug.client_host/xdebug.client_port).
+[1089864] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///home/vrgadev/projects/dzonus-invoicer-app/artisan" language="PHP" xdebug:language_version="8.1.29" protocol_version="1.0" appid="1089864" idekey="PHPSTORM"><engine version="3.3.2"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2024 by Derick Rethans]]></copyright></init>
+
+[1089864] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[1089864] Log closed at 2024-10-01 13:17:34.068172
+
+[1139000] Log opened at 2024-10-01 15:11:58.614094
+[1139000] [Config] INFO: Control socket set up succesfully: '@xdebug-ctrl.1139000'
+[1139000] [Step Debug] INFO: Checking for client discovery headers: 'HTTP_X_FORWARDED_FOR,REMOTE_ADDR'.
+[1139000] [Step Debug] INFO: Checking header 'HTTP_X_FORWARDED_FOR'.
+[1139000] [Step Debug] INFO: Checking header 'REMOTE_ADDR'.
+[1139000] [Step Debug] WARN: Could not discover client host through HTTP headers, connecting to configured address/port: localhost:9003.
+[1139000] [Step Debug] INFO: Connected to debugging client: localhost:9003 (fallback through xdebug.client_host/xdebug.client_port).
+[1139000] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///home/vrgadev/projects/dzonus-invoicer-app/artisan" language="PHP" xdebug:language_version="8.1.29" protocol_version="1.0" appid="1139000" idekey="PHPSTORM"><engine version="3.3.2"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2024 by Derick Rethans]]></copyright></init>
+
+[1139000] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[1139000] Log closed at 2024-10-01 15:11:58.621763
+
+[1148878] Log opened at 2024-10-01 15:48:08.879163
+[1148878] [Config] INFO: Control socket set up succesfully: '@xdebug-ctrl.1148878'
+[1148878] [Step Debug] INFO: Checking for client discovery headers: 'HTTP_X_FORWARDED_FOR,REMOTE_ADDR'.
+[1148878] [Step Debug] INFO: Checking header 'HTTP_X_FORWARDED_FOR'.
+[1148878] [Step Debug] INFO: Checking header 'REMOTE_ADDR'.
+[1148878] [Step Debug] WARN: Could not discover client host through HTTP headers, connecting to configured address/port: localhost:9003.
+[1148878] [Step Debug] INFO: Connected to debugging client: localhost:9003 (fallback through xdebug.client_host/xdebug.client_port).
+[1148878] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///home/vrgadev/projects/dzonus-invoicer-app/artisan" language="PHP" xdebug:language_version="8.1.29" protocol_version="1.0" appid="1148878" idekey="PHPSTORM"><engine version="3.3.2"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2024 by Derick Rethans]]></copyright></init>
+
+[1148878] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[1148878] Log closed at 2024-10-01 15:48:08.887682
+

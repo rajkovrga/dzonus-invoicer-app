@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Invoice;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class InvoiceRepository
 {
@@ -19,5 +22,11 @@ class InvoiceRepository
         }
 
         return $lastInvoice->invoice_number + 1;
+    }
+
+    public function findById(int $id): Invoice
+    {
+        return Invoice::query()
+            ->find($id);
     }
 }

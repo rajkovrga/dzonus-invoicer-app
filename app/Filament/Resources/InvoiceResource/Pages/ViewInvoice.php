@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Services\PdfExportService;
 use Filament\Actions;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\View;
@@ -14,6 +15,11 @@ class ViewInvoice extends ViewRecord
     protected static string $view = 'filament.pages.invoices.view';
     protected static string $resource = InvoiceResource::class;
 
+    public function __construct(
+    )
+    {
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -23,7 +29,6 @@ class ViewInvoice extends ViewRecord
 
     public function infolist(Infolist $infolist): Infolist
     {
-
         return $infolist->schema(components: [
             TextEntry::make('invoice_info')
                 ->label('Invoice Information')
@@ -33,5 +38,10 @@ class ViewInvoice extends ViewRecord
             TextEntry::make('client.name'),
             TextEntry::make('currency.name'),
         ]);
+    }
+
+    public function generatePdf()
+    {
+        (new PdfExportService())->invoice($this->record->id);
     }
 }

@@ -9,7 +9,7 @@
             </p>
         </div>
         <div>
-            <x-filament::button>Generate</x-filament::button>
+            <x-filament::button wire:click="generatePdf">Generate</x-filament::button>
         </div>
     </div>
 
