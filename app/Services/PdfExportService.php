@@ -2,23 +2,26 @@
 
 namespace App\Services;
 
-use App\Repositories\InvoiceRepository;
+use App\Contracts\Repositories\InvoiceRepositoryContract;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Blade;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfExportService
 {
     public function __construct(
+        protected InvoiceRepositoryContract $invoiceRepository
     )
     {
     }
 
-    public function invoice(int $invoiceId): Response
+    public function invoice(int $invoiceId): StreamedResponse
     {
-        $invoice = (new InvoiceRepository())->findById($invoiceId);
-
-        $pdf = PDF::loadView('filament.pages.generates.pdf.invoice', compact('invoice'));
-
-        return $pdf->download('testtest.pdf');
+        $invoice = $this->invoiceRepository->findById($invoiceId);
+        return response()->streamDownload(function () use ($invoice) {
+            echo Pdf::loadHTML(
+                Blade::render('filament.pages.generates.pdf.invoice', ['invoice' => $invoice])
+            )->stream();
+        },'invoice.pdf');
     }
 }

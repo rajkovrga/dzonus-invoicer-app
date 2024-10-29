@@ -9,16 +9,19 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\View;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ViewInvoice extends ViewRecord
 {
     protected static string $view = 'filament.pages.invoices.view';
     protected static string $resource = InvoiceResource::class;
-
-    public function __construct(
-    )
+    private PdfExportService $pdfExportService;
+    public function __construct()
     {
+        $this->pdfExportService = app(PdfExportService::class);
     }
+
 
     protected function getHeaderActions(): array
     {
@@ -40,8 +43,8 @@ class ViewInvoice extends ViewRecord
         ]);
     }
 
-    public function generatePdf()
+    public function generatePdf(): StreamedResponse
     {
-        (new PdfExportService())->invoice($this->record->id);
+        return $this->pdfExportService->invoice($this->record->id);
     }
 }
