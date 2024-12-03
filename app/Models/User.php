@@ -70,7 +70,7 @@ class User extends Authenticatable implements HasAvatar, MustVerifyEmail, Should
 
     public function company(): BelongsTo
     {
-        return $this->belongsTo(Client::class, 'company_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
     public function canAccessPanel(Panel $panel): bool

@@ -14,11 +14,11 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
-        Client::factory()
+        Company::factory()
             ->count(100)
             ->create();
 
-        Company::factory()
+        Client::factory()
             ->count(100)
             ->create();
     }

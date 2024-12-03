@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class ClientFactory extends Factory
             'registration_number' => fake()->ean8(),
             'registration_date' => fake()->date(),
             'tax_id' => fake()->ean8(),
+            'company_id' => Company::all()->random()->id,
         ];
     }
 }

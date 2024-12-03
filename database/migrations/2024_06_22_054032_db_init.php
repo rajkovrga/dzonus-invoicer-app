@@ -66,6 +66,9 @@ return new class extends Migration {
                 ->nullable();
             $table->boolean('is_active')
                 ->default(true);
+            $table->foreignId('company_id')
+                ->references('id')
+                ->on('companies');
             $table->timestampsTz();
         });
 

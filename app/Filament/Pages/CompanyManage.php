@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Client;
+use App\Models\Company;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -22,7 +22,7 @@ class CompanyManage extends Page
     protected static string $view = 'filament.pages.company-manage.info';
     protected static ?string $navigationGroup = 'Settings';
 
-    public ?Client $record = null;
+    public ?Company $record = null;
 
     public function getTitle(): string|Htmlable
     {
@@ -77,6 +77,7 @@ class CompanyManage extends Page
                             ->label('Active')
                         ->boolean(),
                         Infolists\Components\TextEntry::make('address'),
+                        Infolists\Components\TextEntry::make('city'),
                         Infolists\Components\TextEntry::make('vat_id'),
                         Infolists\Components\TextEntry::make('registration_number'),
                         Infolists\Components\TextEntry::make('tax_id'),
@@ -96,6 +97,9 @@ class CompanyManage extends Page
                                 TextInput::make('address')
                                     ->label('Address')
                                     ->default($this->record?->address),
+                                TextInput::make('city')
+                                    ->label('City')
+                                    ->default($this->record?->city),
                                 TextInput::make('vat_id')
                                     ->label('VAT ID')
                                     ->default($this->record?->vat_id),
@@ -172,6 +176,7 @@ class CompanyManage extends Page
             ->state([
                 'name' => $this->record?->name ?? '',
                 'address' => $this->record?->address ?? '',
+                'city' => $this->record?->city ?? '',
                 'vat_id' => $this->record?->vat_id ?? '',
                 'logo_url' => $this->record?->logo_url ?? '',
                 'phone' => $this->record?->phone ?? 'None',

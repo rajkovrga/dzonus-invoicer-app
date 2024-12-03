@@ -17,31 +17,35 @@ use Illuminate\Support\HtmlString;
 class Register extends BaseRegister
 {
     protected ?string $maxWidth = '2xl';
+
     public function form(Form $form): Form
     {
         return $form->schema([
             Wizard::make([
                 Wizard\Step::make('Company information')
                     ->schema([
-                                Forms\Components\TextInput::make('company_name')
-                                    ->label('Name')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('address')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('vat_id')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('registration_number')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('tax_id')
-                                    ->maxLength(255),
-                                Forms\Components\DateTimePicker::make('registration_date')
-                                    ->required(),
-                                Forms\Components\TextInput::make('registration_agent')
-                                    ->maxLength(255),
+                        Forms\Components\TextInput::make('company_name')
+                            ->label('Name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('address')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('city')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('vat_id')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('registration_number')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('tax_id')
+                            ->maxLength(255),
+                        Forms\Components\DateTimePicker::make('registration_date')
+                            ->required(),
+                        Forms\Components\TextInput::make('registration_agent')
+                            ->maxLength(255),
                     ]),
                 Wizard\Step::make('User information')
                     ->schema([
@@ -80,6 +84,7 @@ class Register extends BaseRegister
             ->create([
                 'name' => $data['company_name'],
                 'address' => $data['address'],
+                'city' => $data['city'],
                 'vat_id' => $data['vat_id'],
                 'registration_number' => $data['registration_number'],
                 'tax_id' => $data['tax_id'] ?? null,
@@ -88,11 +93,11 @@ class Register extends BaseRegister
             ]);
 
         $user = User::create([
-           'name' => $data['name'],
-           'first_name' => $data['first_name'],
-           'last_name' => $data['last_name'],
-           'email' => $data['email'],
-           'password' => $data['password'],
+            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
             'company_id' => $client->id
         ]);
 
