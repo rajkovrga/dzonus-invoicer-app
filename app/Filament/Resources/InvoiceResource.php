@@ -31,6 +31,7 @@ class InvoiceResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('invoice_number')
                     ->required()
+                    ->readOnly()
                     ->default($nextInvoiceNumber)
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('dated')

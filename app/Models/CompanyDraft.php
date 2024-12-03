@@ -10,13 +10,9 @@ class CompanyDraft extends Model
 {
     use HasFactory;
 
-    public function currency(): BelongsTo
-    {
-        return $this->belongsTo(Currency::class);
-    }
 
-    public function company(): BelongsTo
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class, 'company_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 }

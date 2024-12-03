@@ -25,32 +25,8 @@ class Client extends Model
         'registration_date',
         'tax_id',
         'registration_agent',
-        'global_email_draft',
-        'stamp_url',
-        'logo_url',
-        'is_active'
+        'is_active',
+        'city'
     ];
-
-    public function bankAccounts(): HasMany
-    {
-        return $this->hasMany(BankAccount::class, 'company_id', 'id');
-    }
-
-    public function invoices(): HasMany
-    {
-        return $this->hasMany(Invoice::class, 'company_id', 'id');
-    }
-
-    public function clients(): BelongsToMany
-    {
-        return $this->belongsToMany(Client::class, 'company_clients', 'client_id', 'company_id')
-            ->withPivot('contract_url')
-            ->withTimestamps();
-    }
-
-    public function owner(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
-    }
 
 }

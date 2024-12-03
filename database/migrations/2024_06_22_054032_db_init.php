@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('address');
             $table->string('vat_id');
             $table->string('phone')->nullable();
+            $table->string('city');
             $table->string('registration_number')
                 ->unique();
             $table->foreignId('owner_id')
@@ -24,10 +25,38 @@ return new class extends Migration {
                 ->on('users');
             $table->string('logo_url')
                 ->nullable();
-            $table->text('global_email_draft')
+            $table->longText('global_email_draft')
                 ->nullable();
             $table->string('stamp_url')
                 ->nullable();
+            $table->string('tax_id')
+                ->unique()
+                ->nullable();
+            $table->dateTimeTz('registration_date');
+            $table->string('registration_agent')
+                ->unique()
+                ->nullable();
+            $table->boolean('is_active')
+                ->default(true);
+            $table->string('contract_url')
+                ->nullable();
+            $table->longText('email_draft')
+                ->nullable();
+            $table->timestampsTz();
+        });
+
+        Schema::create('clients', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('address');
+            $table->string('vat_id');
+            $table->string('phone')->nullable();
+            $table->string('registration_number')
+                ->unique();
+            $table->foreignId('company_owner_id')
+                ->nullable()
+                ->references('id')
+                ->on('companies');
             $table->string('tax_id')
                 ->unique()
                 ->nullable();
@@ -43,29 +72,16 @@ return new class extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('company_id')
                 ->references('id')
-                ->on('clients');
+                ->on('companies');
             $table->string('first_name');
             $table->string('last_name');
-        });
-
-        Schema::create('company_clients', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')
-                ->references('id')
-                ->on('clients');
-            $table->foreignId('company_id')
-                ->references('id')
-                ->on('clients');
-            $table->string('contract_url')
-                ->nullable();
-            $table->timestampsTz();
         });
 
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')
                 ->references('id')
-                ->on('clients');
+                ->on('companies');
             $table->string('swift')->nullable();
             $table->string('iban')->nullable();
             $table->string('number')->nullable();
@@ -114,22 +130,10 @@ return new class extends Migration {
             $table->foreignId('invoice_id')
                 ->references('id')
                 ->on('invoices');
-            $table->bigInteger('price');
+            $table->unsignedBigInteger('price');
             $table->integer('quantity')
                 ->default(1);
             $table->timestampsTz();
-        });
-
-        Schema::create('company_drafts', function (Blueprint $table) {
-            $table->id();
-            $table->text('description');
-            $table->foreignId('company_id')
-                ->references('id')
-                ->on('clients');
-            $table->foreignId('currency_id')
-                ->nullable()
-                ->references('id')
-                ->on('currencies');
         });
     }
 

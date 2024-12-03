@@ -4,6 +4,7 @@ namespace App\Filament\Resources\RegisterResource\Pages\Auth;
 
 use App\Filament\Resources\RegisterResource;
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\User;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Wizard;
@@ -75,7 +76,7 @@ class Register extends BaseRegister
     {
         $data = $this->form->getState();
 
-        $client = Client::query()
+        $client = Company::query()
             ->create([
                 'name' => $data['company_name'],
                 'address' => $data['address'],
