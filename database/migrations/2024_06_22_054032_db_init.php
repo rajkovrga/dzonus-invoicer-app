@@ -60,15 +60,11 @@ return new class extends Migration {
             $table->string('tax_id')
                 ->unique()
                 ->nullable();
-            $table->dateTimeTz('registration_date');
             $table->string('registration_agent')
                 ->unique()
                 ->nullable();
             $table->boolean('is_active')
                 ->default(true);
-            $table->foreignId('company_id')
-                ->references('id')
-                ->on('companies');
             $table->timestampsTz();
         });
 
@@ -108,7 +104,7 @@ return new class extends Migration {
                 ->on('users');
             $table->foreignId('company_id')
                 ->references('id')
-                ->on('clients');
+                ->on('companies');
             $table->foreignId('client_id')
                 ->references('id')
                 ->on('clients');

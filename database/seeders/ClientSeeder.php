@@ -16,6 +16,11 @@ class ClientSeeder extends Seeder
     {
         Company::factory()
             ->count(100)
+            ->state(function () {
+                return [
+                    'registration_date' => now()->subDays(rand(0, 365)),
+                ];
+            })
             ->create();
 
         Client::factory()

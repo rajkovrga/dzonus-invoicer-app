@@ -5,6 +5,7 @@ namespace App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource;
 use App\Services\PdfExportService;
 use Filament\Actions;
+use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\View;
 use Filament\Infolists\Infolist;
@@ -40,6 +41,14 @@ class ViewInvoice extends ViewRecord
             TextEntry::make('trading_place'),
             TextEntry::make('client.name'),
             TextEntry::make('currency.name'),
+            Section::make('Invoice Items')
+                ->schema([
+                    TextEntry::make('quantity')
+                        ->label('Quantity'),
+                    TextEntry::make('price')
+                        ->label('Price'),
+                ])
+                ->columns()
         ]);
     }
 

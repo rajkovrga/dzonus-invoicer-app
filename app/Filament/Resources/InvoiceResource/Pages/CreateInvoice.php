@@ -14,8 +14,9 @@ class CreateInvoice extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['user_id'] = auth()->id();
-        $data['company_id'] = auth()->user()->company_id;
+        $data['trading_place'] = auth()->user()->company->city;
+        $data['company_id'] = auth()->user()->company->id;
+        $data['user_id'] = auth()->user()->id;
 
         return $data;
     }

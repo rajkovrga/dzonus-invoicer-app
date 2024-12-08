@@ -24,9 +24,8 @@ class ClientFactory extends Factory
             'phone' => fake()->phoneNumber,
             'vat_id' => fake()->ean8(),
             'registration_number' => fake()->ean8(),
-            'registration_date' => fake()->date(),
             'tax_id' => fake()->ean8(),
-            'company_id' => Company::all()->random()->id,
+            'company_owner_id' => Company::all()->random()->id,
         ];
     }
 }

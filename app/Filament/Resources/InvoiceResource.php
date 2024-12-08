@@ -38,15 +38,38 @@ class InvoiceResource extends Resource
                     ->required(),
                 Forms\Components\DateTimePicker::make('value_date')
                     ->required(),
-                Forms\Components\TextInput::make('trading_place')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'name')
+                    ->relationship('client',
+                        'name',
+                        fn(Builder $query) => $query->where('company_owner_id', auth()->user()->company->id))
                     ->required(),
                 Forms\Components\Select::make('currency_id')
                     ->relationship('currency', 'name')
+                    ->columns(2)
                     ->required(),
+                Forms\Components\Repeater::make('invoiceItems')
+                    ->relationship('invoiceItems') // Povezuje sa relacijom
+                    ->schema([
+                        Forms\Components\Textarea::make('description')
+                            ->label('Description')
+                            ->required(),
+                        Forms\Components\TextInput::make('price')
+                            ->numeric()
+                            ->required()
+                            ->label('Price'),
+                        Forms\Components\TextInput::make('quantity')
+                            ->numeric()
+                            ->required()
+                            ->label('Quantity'),
+                        Forms\Components\Select::make('unit_id')
+                            ->relationship('unit', 'name')
+                            ->required()
+                            ->label('Unit'),
+                    ])
+                    ->columnSpan(2)
+                    ->label('Invoice Items')
+                    ->required()
+                    ->minItems(1),
             ]);
     }
 
@@ -55,9 +78,9 @@ class InvoiceResource extends Resource
         return $table
             ->columns([
                 InvoiceNumber::make('invoice_number')
-                ->state(function (Invoice $record) {
-                    return $record->invoice_number . '/' . Carbon::make($record->dated)->format('Y');
-                }),
+                    ->state(function (Invoice $record) {
+                        return $record->invoice_number . '/' . Carbon::make($record->dated)->format('Y');
+                    }),
                 Tables\Columns\TextColumn::make('value_date')
                     ->dateTime('d.m.Y')
                     ->sortable(),

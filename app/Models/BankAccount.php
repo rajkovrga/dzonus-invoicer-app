@@ -10,6 +10,13 @@ class BankAccount extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'number',
+        'iban',
+        'swift',
+        'company_id',
+    ];
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Client::class, 'company_id', 'id');

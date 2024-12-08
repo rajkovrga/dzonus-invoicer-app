@@ -22,11 +22,10 @@ class Client extends Model
         'owner_id',
         'phone',
         'registration_number',
-        'registration_date',
         'tax_id',
         'registration_agent',
+        'company_owner_id',
         'is_active',
-        'city'
     ];
 
 }
