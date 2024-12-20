@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="author" content="Rajko Vrga"/>
-    <script
-        src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
-</head>
+
+
+   </head>
 <body>
 <div style="width: 1000px; height: 1200px" class="px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10">
     <div class="sm:w-11/12 lg:w-3/4 mx-auto pt-[47px]">

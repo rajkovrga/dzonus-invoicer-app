@@ -26,6 +26,8 @@ class Client extends Model
         'registration_agent',
         'company_owner_id',
         'is_active',
+        'email_draft',
+        'email'
     ];
 
 }

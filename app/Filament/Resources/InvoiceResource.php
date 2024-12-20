@@ -35,8 +35,10 @@ class InvoiceResource extends Resource
                     ->default($nextInvoiceNumber)
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('dated')
+                    ->default(Carbon::now())
                     ->required(),
                 Forms\Components\DateTimePicker::make('value_date')
+                    ->default(Carbon::now())
                     ->required(),
                 Forms\Components\Select::make('client_id')
                     ->relationship('client',
@@ -48,10 +50,10 @@ class InvoiceResource extends Resource
                     ->columns(2)
                     ->required(),
                 Forms\Components\Repeater::make('invoiceItems')
-                    ->relationship('invoiceItems') // Povezuje sa relacijom
+                    ->relationship('invoiceItems')
                     ->schema([
-                        Forms\Components\Textarea::make('description')
-                            ->label('Description')
+                        Forms\Components\TextInput::make('title')
+                            ->label('Title')
                             ->required(),
                         Forms\Components\TextInput::make('price')
                             ->numeric()

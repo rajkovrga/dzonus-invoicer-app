@@ -18,16 +18,12 @@
             <h3 class="text-lg font-medium filament-breezy-grid-title">Generate and send invoice</h3>
 
             <p class="mt-1 text-sm text-gray-500 filament-breezy-grid-description">
-                Generate and send invoice to client or some another place, you can choose do you wanna use global email format or format specified for client
+                Generate and send invoice to client
             </p>
         </div>
         <div>
             <div class="p-2 flex justify-end">
-                <x-filament::button>Send with global format</x-filament::button>
-            </div>
-
-            <div class="p-2 flex justify-end">
-                <x-filament::button class="m-2">Send with specified format</x-filament::button>
+                <x-filament::button class="m-2">Generate and send</x-filament::button>
             </div>
         </div>
     </div>

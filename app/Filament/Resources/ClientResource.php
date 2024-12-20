@@ -6,6 +6,7 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -43,6 +44,8 @@ class ClientResource extends Resource
                 Forms\Components\TextInput::make('registration_agent')
                     ->columnSpan(2)
                     ->maxLength(255),
+                MarkdownEditor::make('email_draft')
+                ->columnSpan(2),
                 Forms\Components\Toggle::make('is_active')
                     ->default(true)
                     ->required(),
@@ -102,12 +105,5 @@ class ClientResource extends Resource
             'create' => Pages\CreateClient::route('/create'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
-    }
-
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        $data['company_owner_id'] = auth()->company->id;
-
-        return $data;
     }
 }

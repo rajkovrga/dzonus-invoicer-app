@@ -56,9 +56,6 @@ class BankAccountResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('company.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('swift')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iban')
@@ -69,16 +66,14 @@ class BankAccountResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -99,7 +94,6 @@ class BankAccountResource extends Resource
         return [
             'index' => Pages\ListBankAccounts::route('/'),
             'create' => Pages\CreateBankAccount::route('/create'),
-            'edit' => Pages\EditBankAccount::route('/{record}/edit'),
         ];
     }
 }

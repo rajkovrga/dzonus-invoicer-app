@@ -48,6 +48,8 @@ return new class extends Migration {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')
+                ->unique();
             $table->string('address');
             $table->string('vat_id');
             $table->string('phone')->nullable();
@@ -61,7 +63,8 @@ return new class extends Migration {
                 ->unique()
                 ->nullable();
             $table->string('registration_agent')
-                ->unique()
+                ->nullable();
+            $table->string('email_draft')
                 ->nullable();
             $table->boolean('is_active')
                 ->default(true);
@@ -122,7 +125,7 @@ return new class extends Migration {
 
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('title');
             $table->foreignId('unit_id')
                 ->references('id')
                 ->on('units');

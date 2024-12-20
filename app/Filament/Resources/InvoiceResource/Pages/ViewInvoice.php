@@ -5,11 +5,16 @@ namespace App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource;
 use App\Services\PdfExportService;
 use Filament\Actions;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\View;
 use Filament\Infolists\Infolist;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -40,15 +45,28 @@ class ViewInvoice extends ViewRecord
             TextEntry::make('value_date'),
             TextEntry::make('trading_place'),
             TextEntry::make('client.name'),
-            TextEntry::make('currency.name'),
-            Section::make('Invoice Items')
+            TextEntry::make('currency.name')
+                ->columnSpan(2),
+            RepeatableEntry::make('invoiceItems')
                 ->schema([
+                    TextEntry::make('title')
+                        ->label('Title')
+                        ->default(fn ($record) => $record->title),
+
                     TextEntry::make('quantity')
-                        ->label('Quantity'),
+                        ->label('Quantity')
+                        ->default(fn ($record) => $record->quantity),
+
+                    TextEntry::make('unit_title')
+                        ->label('Unit')
+                        ->default(fn ($record) => $record->unit ? $record->unit->name : 'No unit'),
+
                     TextEntry::make('price')
-                        ->label('Price'),
+                        ->label('Price')
+                        ->default(fn ($record) => $record->price),
                 ])
-                ->columns()
+                ->columns(4)
+                ->columnSpan(2),
         ]);
     }
 
