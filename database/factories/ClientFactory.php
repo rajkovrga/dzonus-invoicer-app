@@ -26,6 +26,7 @@ class ClientFactory extends Factory
             'registration_number' => fake()->ean8(),
             'tax_id' => fake()->ean8(),
             'company_owner_id' => Company::all()->random()->id,
+            'email' => fake()->safeEmail,
         ];
     }
 }

@@ -6,15 +6,10 @@ use App\Filament\Resources\InvoiceResource;
 use App\Services\PdfExportService;
 use Filament\Actions;
 use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\View;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Infolist;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Tables\Columns\Column;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -27,7 +22,6 @@ class ViewInvoice extends ViewRecord
     {
         $this->pdfExportService = app(PdfExportService::class);
     }
-
 
     protected function getHeaderActions(): array
     {
@@ -66,6 +60,9 @@ class ViewInvoice extends ViewRecord
                         ->default(fn ($record) => $record->price),
                 ])
                 ->columns(4)
+                ->columnSpan(2),
+            ViewEntry::make('total')
+                ->view('components.infolist-total')
                 ->columnSpan(2),
         ]);
     }

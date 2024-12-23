@@ -112,9 +112,12 @@ return new class extends Migration {
                 ->references('id')
                 ->on('clients');
             $table->foreignId('currency_id')
-                ->nullable()
                 ->references('id')
                 ->on('currencies');
+            $table->foreignId('bank_account_id')
+                ->nullable()
+                ->references('id')
+                ->on('bank_accounts');
             $table->timestampsTz();
         });
 

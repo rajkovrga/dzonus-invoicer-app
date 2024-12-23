@@ -33,6 +33,10 @@ class ClientResource extends Resource
                 Forms\Components\TextInput::make('vat_id')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),

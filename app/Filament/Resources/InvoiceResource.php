@@ -49,6 +49,14 @@ class InvoiceResource extends Resource
                     ->relationship('currency', 'name')
                     ->columns(2)
                     ->required(),
+                Forms\Components\Select::make('bank_account_id')
+                    ->relationship('bankAccount',
+                        'name',
+                        fn(Builder $query) => $query->where('company_id', auth()->user()->company->id))
+                    ->getOptionLabelFromRecordUsing(function ($record) {
+                        return $record->iban ?? $record->number;
+                    })
+                    ->columns(2),
                 Forms\Components\Repeater::make('invoiceItems')
                     ->relationship('invoiceItems')
                     ->schema([

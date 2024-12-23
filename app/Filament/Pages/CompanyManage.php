@@ -29,6 +29,11 @@ class CompanyManage extends Page
         return 'Company ' . auth()->user()->company->name;
     }
 
+    public function generateKpo()
+    {
+
+    }
+
     public function mount(): void
     {
         $this->record = auth()->user()->company;

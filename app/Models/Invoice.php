@@ -19,7 +19,8 @@ class Invoice extends Model
       'invoice_number',
       'trading_place',
       'dated',
-      'company_id'
+      'company_id',
+        'bank_account_id'
     ];
 
     public function invoiceItems(): HasMany {
@@ -44,5 +45,10 @@ class Invoice extends Model
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function bankAccount(): BelongsTo
+    {
+        return $this->belongsTo(BankAccount::class);
     }
 }
