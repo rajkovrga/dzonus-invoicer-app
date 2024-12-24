@@ -3,12 +3,15 @@
 namespace App\Filament\Pages;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Mail;
 
 class SendInvoice extends Page implements HasForms
 {
@@ -18,9 +21,8 @@ class SendInvoice extends Page implements HasForms
     protected static bool $shouldRegisterNavigation = false;
     public ?int $invoiceId = null;
 
-    public function mount(int $invoiceId): void
+    public function mount(): void
     {
-        $this->invoiceId = $invoiceId;
     }
 
     protected function getFormSchema(): array
@@ -35,13 +37,10 @@ class SendInvoice extends Page implements HasForms
                 ->label('Subject')
                 ->default('Invoice from Vrga DEV')
                 ->required(),
-            Textarea::make('message')
+            MarkdownEditor::make('message')
                 ->label('Message')
                 ->default('Please find the attached invoice.')
                 ->required(),
-            Forms\Components\Button::make('Send Invoice')
-                ->action('sendInvoice')
-                ->color('primary'),
         ];
     }
 

@@ -1,6 +1,10 @@
-<x-filament::page>
-    <div class="w-full max-w-3xl mx-auto">
-        <h2 class="text-xl font-bold mb-6">Send Invoice</h2>
-        {{ $this->form }}
+<x-filament::page class="w-full ">
+    <div>
+        <form>
+            {{ $this->form }}
+            <div class="py-3">
+                <x-filament::button class="w-full" wire:click="sendInvoice">Send invoice</x-filament::button>
+            </div>
+        </form>
     </div>
 </x-filament::page>
