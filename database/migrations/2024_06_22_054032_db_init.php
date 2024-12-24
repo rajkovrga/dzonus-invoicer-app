@@ -119,6 +119,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('bank_accounts');
             $table->timestampsTz();
+            $table->unique(['invoice_number', 'client_id', 'company_id']);
         });
 
         Schema::create('units', function (Blueprint $table) {
@@ -140,6 +141,7 @@ return new class extends Migration {
                 ->default(1);
             $table->timestampsTz();
         });
+
     }
 
 };

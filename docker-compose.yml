@@ -58,7 +58,7 @@ services:
         ports:
             - '${FORWARD_REDISINSIGHT_PORT:-5540}:5540'
         volumes:
-            - '.:/data'
+            - 'sail-redis:/data'
         healthcheck:
             test:
                 - CMD

@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invoice</title>
-    @vite('resources/css/app.css')
-
+    <style>
+        {!! file_get_contents(public_path('css/app.css')) !!}
+    </style>
     <style>
         @media print {
             .no-print {
                 display: none;
             }
         }
+        @page {
+            size: A4;
+            margin: 0;
+        }
     </style>
 </head>
-<body class="flex h-[1123px] w-full p-4 px-24 w-794">
+<body>
 <div class="flex h-[1123px] w-full  text-sm relative">
-    <div class="w-full pt-9 p-4 px-24 h-[1123px]">
+    <div class="w-full p-4 px-24 h-[1123px]">
         <div class="flex justify-center border-b-2 border-black pb-3">
             <div class="mt-3 w-1/2 pr-11 pt-3 text-right">
                 <h3 class="text-xl font-bold">Invoice / Faktura: 0021/2024</h3>
@@ -42,8 +47,8 @@
             </div>
         </div>
 
-        <div class="flex border-black pb-4 border-b-2">
-            <div class="w-1/2 ml-4 ">
+        <div class="w-full">
+            <div style="float: left; width: 50%; padding-right: 10px;">
                 <p>From / Od:</p>
                 <h3 class="py-4 text-xl font-bold">Vrga DEV</h3>
                 <p>Vrga DEV</p>
@@ -55,7 +60,8 @@
                 <p>Bank Acc Number:</p>
                 <p>265-1660310005042-68</p>
             </div>
-            <div class="w-1/2">
+
+            <div style="float: left; width: 50%; padding-left: 10px;">
                 <p>Bill to / Komitent:</p>
                 <h3 class="py-4 text-xl font-bold">Sectro DOO</h3>
                 <p>Sectra DOO</p>

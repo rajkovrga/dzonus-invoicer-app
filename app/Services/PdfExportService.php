@@ -20,23 +20,12 @@ class PdfExportService
     {
         $invoice = $this->invoiceRepository->findById($invoiceId);
 
-    $pdf = Pdf::loadView('filament.pages.generates.pdf.invoice', ['invoice' => $invoice], encoding: 'UTF-8');
+        $pdf = Pdf::loadView('filament.pages.generates.pdf.invoice', ['invoice' => $invoice], encoding: 'UTF-8')
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isPhpEnabled', true)
+            ->setPaper('A4', 'portrait');;
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
         }, 'invoice.pdf');
-
-        return $pdf->download();
-        $invoice = $this->invoiceRepository->findById($invoiceId);
-        return response()->streamDownload(function () use ($invoice) {
-            $css = mb_convert_encoding(file_get_contents(public_path('css/app.css')), 'UTF-8', 'auto');
-
-            echo Pdf::loadHTML(
-                Blade::render('filament.pages.generates.pdf.invoice', ['invoice' => $invoice]), encoding: 'UTF-8'
-            )
-                ->setOption('isHtml5ParserEnabled', true)
-                ->setOption('isPhpEnabled', true)
-                ->setOption('customCss', $css)
-                ->download();
-        },'invoice.pdf');
     }
 }

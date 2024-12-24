@@ -31,7 +31,12 @@ class InvoiceResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('invoice_number')
                     ->required()
-                    ->readOnly()
+                    ->unique()
+                    ->afterStateHydrated(function ($state, $get) {
+                        if ($get('record') && !$get('record')->exists) {
+                            return $this->readOnly(true);
+                        }
+                    })
                     ->default($nextInvoiceNumber)
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('dated')
