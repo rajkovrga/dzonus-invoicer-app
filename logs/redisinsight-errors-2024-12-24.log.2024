@@ -1,0 +1,5 @@
+12/24/2024, 1:57:57 PM | ERROR | KeytarEncryptionStrategy | Failed to initialize keytar module | [object Object]
+12/24/2024, 1:58:15 PM | ERROR | IoredisRedisConnectionStrategy | Failed connection to the redis database. | [object Object]
+12/24/2024, 1:58:15 PM | ERROR | DatabaseService | Failed to add database. | [object Object]
+12/24/2024, 1:58:15 PM | ERROR | IoredisRedisConnectionStrategy | Failed connection to the redis database. | [object Object]
+12/24/2024, 1:58:16 PM | ERROR | IoredisRedisConnectionStrategy | Failed connection to the redis database. | [object Object]

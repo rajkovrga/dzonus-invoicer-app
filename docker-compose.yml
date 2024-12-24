@@ -24,8 +24,9 @@ services:
             - sail
         depends_on:
             - pgsql
-            - redis
+            - redisinsight
             - meilisearch
+            - redis
             - mailpit
     pgsql:
         image: 'postgres:15'
@@ -52,6 +53,21 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+    redisinsight:
+        image: 'redislabs/redisinsight:latest'
+        ports:
+            - '${FORWARD_REDISINSIGHT_PORT:-5540}:5540'
+        volumes:
+            - '.:/data'
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
