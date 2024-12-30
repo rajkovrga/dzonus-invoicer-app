@@ -6,26 +6,34 @@ use App\Contracts\Repositories\InvoiceRepositoryContract;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Blade;
+use Mpdf\HTMLParserMode;
+use Mpdf\Mpdf;
+use Mpdf\MpdfException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfExportService
 {
     public function __construct(
-        protected InvoiceRepositoryContract $invoiceRepository
+        protected InvoiceRepositoryContract $invoiceRepository,
+
     )
     {
     }
 
+    /**
+     * @throws MpdfException
+     */
     public function invoice(int $invoiceId): StreamedResponse
     {
         $invoice = $this->invoiceRepository->findById($invoiceId);
+        $html = view('filament.pages.generates.pdf.invoice');
 
-        $pdf = Pdf::loadView('filament.pages.generates.pdf.invoice', ['invoice' => $invoice], encoding: 'UTF-8')
-            ->setOption('isHtml5ParserEnabled', true)
-            ->setOption('isPhpEnabled', true)
-            ->setPaper('A4', 'portrait');;
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->stream();
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+
+        return response()->streamDownload(function () use ($mpdf) {
+            echo $mpdf->Output();
         }, 'invoice.pdf');
     }
 }

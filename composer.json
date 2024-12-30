@@ -9,7 +9,6 @@
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "amidesfahani/filament-tinyeditor": "^2.0",
         "ariaieboy/filament-currency": "^1.8",
-        "barryvdh/laravel-dompdf": "^3.0",
         "coderflex/filament-turnstile": "^2.2",
         "filament/actions": "^3.2",
         "filament/filament": "^3.2",
@@ -20,6 +19,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "^8.2",
         "outerweb/filament-settings": "^1.2",
         "tomatophp/filament-locations": "^1.0"
     },
