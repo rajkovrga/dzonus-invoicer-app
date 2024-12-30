@@ -1,20 +1,22 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+@php use Carbon\Carbon; @endphp
+
+
+    <!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invoice</title>
-    <style>
-        {!! file_get_contents(public_path('css/app.css')) !!}
-    </style>
     <style>
         @media print {
             .no-print {
                 display: none;
             }
         }
+
         @page {
             size: A4;
             margin: 0;
@@ -22,109 +24,164 @@
     </style>
 </head>
 <body>
-<div class="flex h-[1123px] w-full  text-sm relative">
-    <div class="w-full p-4 px-24 h-[1123px]">
-        <div class="flex justify-center border-b-2 border-black pb-3">
-            <div class="mt-3 w-1/2 pr-11 pt-3 text-right">
-                <h3 class="text-xl font-bold">Invoice / Faktura: 0021/2024</h3>
-            </div>
-            <div class="flex w-1/2 flex-wrap justify-end">
-                <div class="w-1/2 pb-3">
-                    <p>Dated /</p>
-                    <p>Datum fakture:</p>
-                    <p>18.03.2024</p>
-                </div>
-                <div class="w-1/2 pb-3">
-                    <p>Value date /</p>
-                    <p>Datum prometa:</p>
-                    <p>18.03.2024</p>
-                </div>
-                <div class="w-1/2 pb-3">
-                    <p>Trading place /</p>
-                    <p>Mesto prometa:</p>
-                    <p>BEOGRAD</p>
-                </div>
-            </div>
+<div
+    style="width: 100%; padding:10px; min-height: 1123px; font-size: 0.875rem; position: fixed; top: 0; left:0; box-sizing: border-box;">
+    <div style="width: 98%; min-height: 1123px; box-sizing: border-box;">
+        <table style="width: 100%; border-bottom: 2px solid black; padding-bottom: 24px;">
+            <tr>
+                <td style="width: 50%; padding-top: 12px; padding-right: 44px; text-align: right;">
+                    <h3 style="font-size: 1.25rem; font-weight: bold;">Invoice /
+                        Faktura: {{ str_pad($invoice->invoice_number, 4, '0', STR_PAD_LEFT) }}
+                        /{{ Carbon::parse($invoice->value_date)->format('Y') }}</h3>
+                </td>
+                <td style="width: 50%; padding-top: 12px; text-align: right;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 50%; padding-bottom: 12px;">
+                                <p style="margin: 0;">Dated /</p>
+                                <p style="margin: 0;">Datum fakture:</p>
+                                <p style="margin: 0;">{{ Carbon::parse($invoice->dated)->format('d.m.Y') }}</p>
+                            </td>
+                            <td style="width: 50%; padding-bottom: 12px;">
+                                <p style="margin: 0;">Value date /</p>
+                                <p style="margin: 0;">Datum prometa:</p>
+                                <p style="margin: 0;">{{ Carbon::parse($invoice->value_date)->format('d.m.Y') }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding-bottom: 12px;">
+                                <p style="margin: 0;">Trading place /</p>
+                                <p style="margin: 0;">Mesto prometa:</p>
+                                <p style="margin: 0;">{{ strtoupper($invoice->user->company->city) }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div style="width: 100%;">
+            <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <tr>
+                    <td style="width: 50%; padding: 0; vertical-align: top; word-wrap: break-word; word-break: break-word;">
+                        <p style="margin: 0;">From / Od:</p>
+                        <h3 style="margin: 0;  padding:20px 0; font-size: 1.25rem; font-weight: bold;">{{ $invoice->user->company->name }}</h3>
+                        <p style="margin: 0;">{{ $invoice->user->company->name }}</p>
+                        <p style="margin: 0;">{{ $invoice->user->company->address }}</p>
+                        <p style="margin: 0;">{{ $invoice->user->company->city }} {{ $invoice->user->company->zip_code }}</p>
+                        <p style="margin: 0;">Vat No / PIB: {{ $invoice->user->company->vat_id }}</p>
+                        <p style="margin: 0;">ID No / MB: {{ $invoice->user->company->registration_number }}</p>
+                        <p style="margin: 0;">E-mail: {{ $invoice->user->company->email }}</p>
+                        @if($invoice->bank_account_id !== null)
+                            <p style="margin: 0;">Bank Acc Number:</p>
+                            <p style="margin: 0;">
+                                {{ $invoice->backAccount->number ? $invoice->backAccount->number : $invoice->backAccount->iban }}
+                            </p>
+                        @endif
+                    </td>
+                    <td style="width: 50%; padding: 0; vertical-align: top; word-wrap: break-word; word-break: break-word;">
+                        <p style="margin: 0;">Bill to / Komitent:</p>
+                        <h3 style="margin: 0; padding:20px 0px; font-size: 1.25rem; font-weight: bold;">{{ $invoice->company->name }}</h3>
+                        <p style="margin: 0;">{{ $invoice->company->name }}</p>
+                        <p style="margin: 0;">{{ $invoice->user->company->address }}</p>
+                        <p style="margin: 0;">{{ $invoice->company->city }} {{ $invoice->company->zip_code }}</p>
+                        <p style="margin: 0;">Vat No / PIB: {{ $invoice->company->vat_id }}</p>
+                        <p style="margin: 0;">ID No / MB: {{ $invoice->company->registration_number }}</p>
+                        @if(!empty($invoice->company->registration_agent))
+                            <p style="margin: 0;">Reg. Agent / Zakonski zastupnik:</p>
+                            <p style="margin: 0;">{{ $invoice->company->registration_agent }}</p>
+                        @endif
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <div class="w-full">
-            <div style="float: left; width: 50%; padding-right: 10px;">
-                <p>From / Od:</p>
-                <h3 class="py-4 text-xl font-bold">Vrga DEV</h3>
-                <p>Vrga DEV</p>
-                <p>Episkopa Nikolaja 11/25</p>
-                <p>Beograd (Zemun) 11081</p>
-                <p>Vat No / PIB: 113460262</p>
-                <p>ID No / MB: 66841251</p>
-                <p>E-mail: rajkovrga.it@gmail.com</p>
-                <p>Bank Acc Number:</p>
-                <p>265-1660310005042-68</p>
-            </div>
-
-            <div style="float: left; width: 50%; padding-left: 10px;">
-                <p>Bill to / Komitent:</p>
-                <h3 class="py-4 text-xl font-bold">Sectro DOO</h3>
-                <p>Sectra DOO</p>
-                <p>Hajduk Veljkov Venac 4</p>
-                <p>Beograd, 11000</p>
-                <p>Vat No / PIB: 104780639</p>
-                <p>ID No / MB: 20232692</p>
-                <p>Reg. Agent / Zakonski zastupnik:</p>
-                <p>Goran Radosavljević</p>
-            </div>
-        </div>
-
-        <div class=''>
-            <table class="table-auto w-full border-collapse">
+        <div style="width: 100%;">
+            <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                <tr class='border-b-2 border-black'>
-                    <td class="p-2 text-left"><p class='font-bold'>ITEM</p><p>(VRSTA USLUGE)</p></td>
-                    <td class="p-2 text-left"><p class='font-bold'>UNIT</p><p>(JED. MERE)</p></td>
-                    <td class="p-2 text-left"><p class='font-bold'>QUANTITY</p><p>(KOLIČINA)</p></td>
-                    <td class="p-2 text-left"><p class='font-bold'>PRICE</p><p>(CENA)</p></td>
-                    <td class="p-2 text-left"><p class='font-bold'>TOTAL</p><p>(TOTAL)</p></td>
+                <tr style="border-bottom: 2px solid black;">
+                    <td style="padding: 8px; text-align: left;">
+                        <p style="font-weight: bold; margin: 0;">ITEM</p>
+                        <p style="margin: 0;">(VRSTA USLUGE)</p>
+                    </td>
+                    <td style="padding: 8px; text-align: left;">
+                        <p style="font-weight: bold; margin: 0;">UNIT</p>
+                        <p style="margin: 0;">(JED. MERE)</p>
+                    </td>
+                    <td style="padding: 8px; text-align: left;">
+                        <p style="font-weight: bold; margin: 0;">QUANTITY</p>
+                        <p style="margin: 0;">(KOLIČINA)</p>
+                    </td>
+                    <td style="padding: 8px; text-align: left;">
+                        <p style="font-weight: bold; margin: 0;">PRICE</p>
+                        <p style="margin: 0;">(CENA)</p>
+                    </td>
+                    <td style="padding: 8px; text-align: left;">
+                        <p style="font-weight: bold; margin: 0;">TOTAL</p>
+                        <p style="margin: 0;">(TOTAL)</p>
+                    </td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="p-1">Obavljanje informacionih usluga</td>
-                    <td class="p-1">Piece (Komad)</td>
-                    <td class="p-1">1,00</td>
-                    <td class="p-1">242 000</td>
-                    <td class="p-1">242 000</td>
-                </tr>
+                @foreach($invoice->invoiceItems as $item)
+                    <tr>
+                        <td style="padding: 4px; padding-right: 7px;">{{ $item->title }}</td>
+                        <td style="padding: 4px;">{{ $item->unit->name }}</td>
+                        <td style="padding: 4px;">{{ number_format($item->quantity, 2, ',', '.') }}</td>
+                        <td style="padding: 4px;">{{ number_format($item->price, 2, ',', '.') }}</td>
+                        <td style="padding: 4px;">{{ number_format($item->quantity * $item->price, 2, ',', '.') }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
-            <div class="border-y border-black">
-                <table class="table-auto w-full">
+
+            <div style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                <table style="width: 100%;">
                     <tr>
-                        <td class="py-3 pl-4 font-bold text-left">AMOUNT DUE / UKUPNO (DIN)</td>
-                        <td class="text-right pr-5 bg-gray-200 font-bold">242 000, 00</td>
+                        <td style="padding-top: 12px; padding-left: 16px; font-weight: bold; text-align: left;">AMOUNT
+                            DUE / UKUPNO ({{ $invoice->currency->iso }})
+                        </td>
+                        <td style="text-align: right; padding: 10px 20px 10px 10px; background-color: #e2e8f0; font-weight: bold;">
+                            {{ number_format($invoice->invoiceItems->sum(fn($item) => $item->quantity * $item->price), 2, ',', '.') }}
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <div class="w-3/4 bg-slate-200 mt-4 ml-6">
-            <div class="pb-4">
-                <p class="font-bold">NOTE / KOMENTAR:</p>
-                <p>The transfer amount is expected to be delivered in full to the beneficiary.</p>
-                <p>Payment is required within 7 bussiness days of the invoice date. Plase send remittance to
-                    rajkovrga.it@gmail.com</p>
+        <div style="width: 75%; background-color: #e2e8f0; margin-top: 16px; margin-left: 24px;">
+            @if(!empty($invoice->user->company->invoice_company_description))
+                <div style="padding-bottom: 16px;">
+                    <p style="font-weight: bold; margin: 0;">NOTE / KOMENTAR:</p>
+                    <p style="margin: 0;">{{ $invoice->user->company->invoice_company_description }}</p>
+                </div>
+            @endif
+            @if(empty($invoice->user->company->vat_id))
+                <p style="margin: 0;">Not in the VAT system /</p>
+                <p style="margin: 0;">Poreski obveznik nije u sistemu PDV-a</p>
+            @else
+                <p style="margin: 0;">In the VAT system /</p>
+                <p style="margin: 0;">Poreski obveznik jeste u sistemu PDV-a</p>
+            @endif
+            <p style="margin: 0;">
+                Place / Mesto izdavanja: {{ $invoice->user->company->city }} ({{ $invoice->user->company->address }}
+                ) {{ $invoice->user->company->zip_code }}
+            </p>
+        </div>
+
+        @if($invoice->user->company->stamp_url)
+            <div style="width: 25%; margin-left: 20px; margin-top: 28px; height: 120px; background-color: #cbd5e1;">
+                <img src="{{ $invoice->user->company->stamp_url }}" alt="Stamp"
+                     style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-            <p>Not in the VAT system /</p>
-            <p>Poreski obveznik nije u sistemu PDV-a</p>
-            <p>Place / Mesto izdavanja: Beograd(Zemun) 11081</p>
+        @endif
 
-
-        </div>
-
-        <div class='w-1/4 ml-5 mt-7 h-[120px] bg-slate-300'>
-            STAMP
-        </div>
-        <div class="absolute bottom-0 mb-5 left-1/2 transform -translate-x-1/2 text-center bg-black h-[40px] w-[120px]">
-            LOGO
-        </div>
+        @if($invoice->user->company->logo_url)
+            <div
+                style="position: absolute; bottom: 0; margin-bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; background-color: black; height: 40px; width: 120px;">
+                <img src="{{ $invoice->user->company->logo_url }}" alt="Logo"
+                     style="height: 100%; object-fit: contain;">
+            </div>
+        @endif
     </div>
 </div>
 </body>

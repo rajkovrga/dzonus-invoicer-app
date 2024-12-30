@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('address');
             $table->string('vat_id');
+            $table->string('email');
+            $table->string('zip_code');
             $table->string('phone')->nullable();
             $table->string('city');
             $table->string('registration_number')

@@ -29,7 +29,9 @@ class Company extends Model
         'global_email_draft',
         'stamp_url',
         'logo_url',
-        'is_active'
+        'is_active',
+        'email',
+        'zip_code'
     ];
 
     public function bankAccounts(): HasMany
