@@ -10,7 +10,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invoice</title>
-    <style>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            font-family: "dejavu sans", serif;
+            font-size: 11px;
+            color: #000;
+        }
+
         @media print {
             .no-print {
                 display: none;

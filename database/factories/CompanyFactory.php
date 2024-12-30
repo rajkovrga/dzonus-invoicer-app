@@ -25,7 +25,9 @@ class CompanyFactory extends Factory
             'registration_number' => fake()->ean8(),
             'registration_date' => fake()->date(),
             'tax_id' => fake()->ean8(),
-            'city' => fake()->city
+            'city' => fake()->city,
+            'zip_code' => fake()->postcode,
+            'email' => fake()->safeEmail,
         ];
     }
 }

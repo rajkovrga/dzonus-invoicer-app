@@ -23,7 +23,7 @@
         </div>
         <div>
             <div class="p-2 flex justify-end">
-                <x-filament::button tag="a" href="{{ route('filament.admin.pages.send-invoice', ['invoiceId' => $this->record->id]) }}" class="m-2">Generate and send</x-filament::button>
+                <x-filament::button tag="a" href="{{ route('filament.admin.pages.send-invoice', ['id' => $this->record->id]) }}" class="m-2">Generate and send</x-filament::button>
             </div>
         </div>
     </div>

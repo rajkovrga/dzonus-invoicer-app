@@ -14,7 +14,7 @@ use Filament\Tables\Table;
 class BankAccountResource extends Resource
 {
     protected static ?string $model = BankAccount::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
     public static function form(Form $form): Form
     {

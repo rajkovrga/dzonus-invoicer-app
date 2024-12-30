@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Contracts\Repositories\InvoiceRepositoryContract;
+use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\User;
 
@@ -26,5 +27,10 @@ class InvoiceRepository implements InvoiceRepositoryContract
     {
         return Invoice::query()
             ->find($id);
+    }
+
+    public function getCountOfInvoicesForCompanyByYear(Company $company, int $year): int
+    {
+        return $company->invoices()->whereYear('created_at', $year)->count();
     }
 }

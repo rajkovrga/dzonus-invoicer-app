@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvoiceResource\Pages;
-use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Models\Invoice;
 use App\Repositories\InvoiceRepository;
 use App\Tables\Columns\InvoiceNumber;
@@ -16,6 +15,7 @@ use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
 
 class InvoiceResource extends Resource
 {
@@ -31,9 +31,18 @@ class InvoiceResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('invoice_number')
                     ->required()
-                    ->unique()
+                    ->rules(function ($get) {
+                        $invoiceId = $get('id');
+                        if (!$invoiceId) {
+                            return [
+                                Rule::unique('invoices', 'invoice_number'),
+                            ];
+                        }
+
+                        return [];
+                    })
                     ->afterStateHydrated(function ($state, $get) {
-                        if ($get('record') && !$get('record')->exists) {
+                        if ($get('record') && $get('record')->exists) {
                             return $this->readOnly(true);
                         }
                     })

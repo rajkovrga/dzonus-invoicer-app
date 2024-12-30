@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $casts = [
         'is_active' => 'boolean',
@@ -31,7 +32,8 @@ class Company extends Model
         'logo_url',
         'is_active',
         'email',
-        'zip_code'
+        'zip_code',
+        'invoice_company_description'
     ];
 
     public function bankAccounts(): HasMany

@@ -44,6 +44,8 @@ return new class extends Migration {
                 ->nullable();
             $table->longText('email_draft')
                 ->nullable();
+            $table->longText('invoice_company_description')
+                ->nullable();
             $table->timestampsTz();
         });
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Repositories\InvoiceRepositoryContract;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfExportService
@@ -20,14 +21,21 @@ class PdfExportService
         $invoice = $this->invoiceRepository->findById($invoiceId);
 
         $pdf = PDF::loadView('filament.pages.generates.pdf.invoice', compact('invoice'))
-            ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isPhpEnabled', true)
+            ->setOption('encoding', 'UTF-8');
 
-        $pdf->setOption('encoding', 'UTF-8');
+        $fileName = sprintf(
+            '%s.%s %s-%s.pdf',
+            $this->invoiceRepository->getCountOfInvoicesForCompanyByYear($invoice->user->company, Carbon::parse($invoice->value_date)->format('Y')),
+            str_pad($invoice->invoice_number, 4, '0', STR_PAD_LEFT) . '.' .
+            Carbon::parse($invoice->value_date)->format('Y'),
+            $invoice->company->name,
+            Carbon::parse($invoice->value_date)->format('d.m.Y'),
 
-        $pdfContent = $pdf->output();
-
-        return response()->streamDownload(function () use ($pdfContent) {
-            echo $pdfContent;
-        }, 'invoice.pdf');
+        );
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->output();
+        }, $fileName);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Company;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -82,6 +83,8 @@ class CompanyManage extends Page
                             ->label('Active')
                         ->boolean(),
                         Infolists\Components\TextEntry::make('address'),
+                        Infolists\Components\TextEntry::make('zip_code'),
+                        Infolists\Components\TextEntry::make('email'),
                         Infolists\Components\TextEntry::make('city'),
                         Infolists\Components\TextEntry::make('vat_id'),
                         Infolists\Components\TextEntry::make('registration_number'),
@@ -102,6 +105,12 @@ class CompanyManage extends Page
                                 TextInput::make('address')
                                     ->label('Address')
                                     ->default($this->record?->address),
+                                TextInput::make('zip_code')
+                                    ->label('Zip code')
+                                    ->default($this->record?->zip_code),
+                                TextInput::make('email')
+                                    ->label('email')
+                                    ->default($this->record?->email),
                                 TextInput::make('city')
                                     ->label('City')
                                     ->default($this->record?->city),
@@ -146,6 +155,8 @@ class CompanyManage extends Page
                     ->headerActions([
                         Action::make('edit')
                             ->form([
+                                DatePicker::make('registration_date')
+                                    ->default($this->record?->registration_date),
                                 TextInput::make('registration_agent')
                                     ->default($this->record?->registration_agent),
                             ])
@@ -162,7 +173,10 @@ class CompanyManage extends Page
                             ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
                         Infolists\Components\TextEntry::make('global_email_draft')
                             ->html()
-                            ->default($this->record?->global_email_draft)
+                            ->default($this->record?->global_email_draft),
+                        Infolists\Components\TextEntry::make('invoice_company_description')
+                            ->html()
+                            ->default($this->record?->invoice_company_description)
                     ])
                     ->headerActions([
                         Action::make('edit')
@@ -171,7 +185,9 @@ class CompanyManage extends Page
                                     ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp')
                                     ->image(),
                                 RichEditor::make('global_email_draft')
-                                ->default($this->record?->global_email_draft)
+                                ->default($this->record?->global_email_draft),
+                                RichEditor::make('invoice_company_description')
+                                    ->default($this->record?->invoice_company_description)
                             ])
                             ->action(function (array $data) {
                                 $this->record->update($data);
@@ -181,6 +197,9 @@ class CompanyManage extends Page
             ->state([
                 'name' => $this->record?->name ?? '',
                 'address' => $this->record?->address ?? '',
+                'zip_code' => $this->record?->zip_code ?? '',
+                'email' => $this->record?->email ?? '',
+                'invoice_company_description' => $this->record?->invoice_company_description ?? '',
                 'city' => $this->record?->city ?? '',
                 'vat_id' => $this->record?->vat_id ?? '',
                 'logo_url' => $this->record?->logo_url ?? '',

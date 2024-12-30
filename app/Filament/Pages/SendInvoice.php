@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Contracts\Repositories\InvoiceRepositoryContract;
+use App\Models\Invoice;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -12,12 +14,15 @@ class SendInvoice extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    protected static ?string $route = '/send-invoice/{id}';
     protected static string $view = 'filament.pages.invoices.send-invoice';
     protected static bool $shouldRegisterNavigation = false;
     public ?int $invoiceId = null;
+    public ?Invoice $record = null;
 
-    public function mount(): void
+    public function mount(InvoiceRepositoryContract $invoiceRepository)
     {
+        $this->record = $invoiceRepository->findById($this->invoiceId);
     }
 
     protected function getFormSchema(): array
@@ -26,8 +31,8 @@ class SendInvoice extends Page implements HasForms
             TextInput::make('email')
                 ->label('Recipient Email')
                 ->placeholder('example@domain.com')
-                ->email()
-                ->required(),
+                ->readOnly()
+                ->default($this->record->company->email),
             TextInput::make('subject')
                 ->label('Subject')
                 ->default('Invoice from Vrga DEV')
