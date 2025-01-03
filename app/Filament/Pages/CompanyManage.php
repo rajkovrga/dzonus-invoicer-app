@@ -16,6 +16,8 @@ use Filament\Infolists\Infolist;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Infolists\Components\IconEntry;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CompanyManage extends Page
 {
@@ -25,22 +27,25 @@ class CompanyManage extends Page
     protected static ?string $navigationGroup = 'Settings';
 
     public ?Company $record = null;
-    private ExcelExportService $excelExportService;
 
     public function getTitle(): string|Htmlable
     {
         return 'Company ' . auth()->user()->company->name;
     }
 
-    public function generateKpo()
+    /**
+     * @throws Exception
+     */
+    public function generateKpo(): BinaryFileResponse
     {
-        $this->excelExportService->exportKpo();
+        $excelExportService = new ExcelExportService();
+
+        $filePath = $excelExportService->exportKpo($this->record);
+        return response()->download($filePath, 'KPO.xlsx')->deleteFileAfterSend(true);
     }
 
-    public function mount(ExcelExportService $excelExportService): void
+    public function mount(): void
     {
-        $this->excelExportService = $excelExportService;
-
         $this->record = auth()->user()->company;
 
         $this->fillForm();
