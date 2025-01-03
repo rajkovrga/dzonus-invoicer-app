@@ -20,11 +20,6 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->singleton(SendInvoice::class, function ($app) {
-            return new SendInvoice(
-                $app->make(InvoiceRepositoryContract::class)
-            );
-        });
     }
 
     /**
@@ -34,12 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(PdfExportService::class, function ($app) {
             return new PdfExportService(
-                $app->make(InvoiceRepositoryContract::class)
-            );
-        });
-
-        $this->app->singleton(SendInvoice::class, function ($app) {
-            return new SendInvoice(
                 $app->make(InvoiceRepositoryContract::class)
             );
         });

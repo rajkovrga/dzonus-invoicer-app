@@ -81,7 +81,7 @@
                         @if($invoice->bank_account_id !== null)
                             <p style="margin: 0;">Bank Acc Number:</p>
                             <p style="margin: 0;">
-                                {{ $invoice->backAccount->number ? $invoice->backAccount->number : $invoice->backAccount->iban }}
+                                {{ $invoice->bankAccount->number ? $invoice->bankAccount->number : $invoice->bankAccount->iban }}
                             </p>
                         @endif
                     </td>

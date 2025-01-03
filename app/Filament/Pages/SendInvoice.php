@@ -8,6 +8,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Pages\Page;
 
 class SendInvoice extends Page implements HasForms
@@ -17,12 +18,16 @@ class SendInvoice extends Page implements HasForms
     protected static ?string $route = '/send-invoice/{id}';
     protected static string $view = 'filament.pages.invoices.send-invoice';
     protected static bool $shouldRegisterNavigation = false;
-    public ?int $invoiceId = null;
+    public ?int $id = null;
     public ?Invoice $record = null;
 
-    public function mount(InvoiceRepositoryContract $invoiceRepository)
+    public function mount(InvoiceRepositoryContract $invoiceRepository): void
     {
-        $this->record = $invoiceRepository->findById($this->invoiceId);
+        $this->record = $invoiceRepository->findById(request()->get('id'));
+    }
+
+    public function getForm(string $name): ?Form
+    {
     }
 
     protected function getFormSchema(): array
@@ -30,16 +35,20 @@ class SendInvoice extends Page implements HasForms
         return [
             TextInput::make('email')
                 ->label('Recipient Email')
-                ->placeholder('example@domain.com')
-                ->readOnly()
-                ->default($this->record->company->email),
+                ->placeholder($this->record->company->email)
+                ->default($this->record->company->email)
+                ->disabled(),
+
             TextInput::make('subject')
                 ->label('Subject')
-                ->default('Invoice from Vrga DEV')
                 ->required(),
+
             MarkdownEditor::make('message')
                 ->label('Message')
-                ->default('Please find the attached invoice.')
+                ->default(function () {
+                    return $this->record->client->email_draft
+                        ?? auth()->user()->company->invoice_email_draft;
+                })
                 ->required(),
         ];
     }

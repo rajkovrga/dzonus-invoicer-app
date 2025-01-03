@@ -171,12 +171,11 @@ class CompanyManage extends Page
                             ->label('Stamp Company')
                             ->circular()
                             ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp'),
-                        Infolists\Components\TextEntry::make('global_email_draft')
+                        Infolists\Components\TextEntry::make('invoice_email_subject')
+                            ->default($this->record?->invoice_email_subject),
+                        Infolists\Components\TextEntry::make('invoice_email_draft')
                             ->html()
-                            ->default($this->record?->global_email_draft),
-                        Infolists\Components\TextEntry::make('invoice_company_description')
-                            ->html()
-                            ->default($this->record?->invoice_company_description)
+                            ->default($this->record?->invoice_email_draft),
                     ])
                     ->headerActions([
                         Action::make('edit')
@@ -184,10 +183,10 @@ class CompanyManage extends Page
                                 FileUpload::make('stamp_url')
                                     ->default($this->record?->stamp_url ?? 'https://dummyimage.com/300x300/000000/ffffff&text=stamp')
                                     ->image(),
-                                RichEditor::make('global_email_draft')
-                                ->default($this->record?->global_email_draft),
-                                RichEditor::make('invoice_company_description')
-                                    ->default($this->record?->invoice_company_description)
+                                TextInput::make('invoice_email_subject')
+                                    ->default($this->record?->invoice_email_subject),
+                                RichEditor::make('invoice_email_draft')
+                                ->default($this->record?->invoice_email_draft),
                             ])
                             ->action(function (array $data) {
                                 $this->record->update($data);
@@ -199,7 +198,7 @@ class CompanyManage extends Page
                 'address' => $this->record?->address ?? '',
                 'zip_code' => $this->record?->zip_code ?? '',
                 'email' => $this->record?->email ?? '',
-                'invoice_company_description' => $this->record?->invoice_company_description ?? '',
+                'invoice_email_subject' => $this->record?->invoice_email_subject ?? 'None',
                 'city' => $this->record?->city ?? '',
                 'vat_id' => $this->record?->vat_id ?? '',
                 'logo_url' => $this->record?->logo_url ?? '',
@@ -212,7 +211,7 @@ class CompanyManage extends Page
                 'registration_agent' => $this->record?->registration_agent ?? 'None',
                 'stamp_url' => $this->record?->stamp_url ?? '',
                 'active' => $this->record?->is_active ?? '',
-                'Email global draft' => $this->record?->global_email_draft ?? 'None',
+                'invoice_email_draft' => $this->record?->invoice_email_draft ?? 'None',
             ]);
     }
 }

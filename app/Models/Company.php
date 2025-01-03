@@ -27,13 +27,13 @@ class Company extends Model
         'registration_date',
         'tax_id',
         'registration_agent',
-        'global_email_draft',
+        'invoice_email_draft',
         'stamp_url',
         'logo_url',
         'is_active',
         'email',
         'zip_code',
-        'invoice_company_description'
+        'invoice_email_subject'
     ];
 
     public function bankAccounts(): HasMany

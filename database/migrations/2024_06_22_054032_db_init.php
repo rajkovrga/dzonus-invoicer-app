@@ -27,8 +27,6 @@ return new class extends Migration {
                 ->on('users');
             $table->string('logo_url')
                 ->nullable();
-            $table->longText('global_email_draft')
-                ->nullable();
             $table->string('stamp_url')
                 ->nullable();
             $table->string('tax_id')
@@ -42,9 +40,9 @@ return new class extends Migration {
                 ->default(true);
             $table->string('contract_url')
                 ->nullable();
-            $table->longText('email_draft')
+            $table->longText('invoice_email_draft')
                 ->nullable();
-            $table->longText('invoice_company_description')
+            $table->longText('invoice_email_subject')
                 ->nullable();
             $table->timestampsTz();
         });
