@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Company;
+use App\Services\ExcelExportService;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -24,6 +25,7 @@ class CompanyManage extends Page
     protected static ?string $navigationGroup = 'Settings';
 
     public ?Company $record = null;
+    private ExcelExportService $excelExportService;
 
     public function getTitle(): string|Htmlable
     {
@@ -32,11 +34,13 @@ class CompanyManage extends Page
 
     public function generateKpo()
     {
-
+        $this->excelExportService->exportKpo();
     }
 
-    public function mount(): void
+    public function mount(ExcelExportService $excelExportService): void
     {
+        $this->excelExportService = $excelExportService;
+
         $this->record = auth()->user()->company;
 
         $this->fillForm();

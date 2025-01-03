@@ -4,12 +4,14 @@ namespace App\Filament\Pages;
 
 use App\Contracts\Repositories\InvoiceRepositoryContract;
 use App\Models\Invoice;
-use Barryvdh\DomPDF\PDF;
+use App\Services\PdfExportService;
+use Carbon\Carbon;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Validation\ValidationException;
 
@@ -19,10 +21,10 @@ class SendInvoice extends Page implements HasForms
     public ?array $data = [];
     protected static ?string $route = '/send-invoice/{id}';
     protected static string $view = 'filament.pages.invoices.send-invoice';
+    protected ?string $heading;
     protected static bool $shouldRegisterNavigation = false;
     public ?int $id = null;
     public ?Invoice $record = null;
-
     public function form(Form $form): Form
     {
         return $form
@@ -46,6 +48,8 @@ class SendInvoice extends Page implements HasForms
     {
         $this->record = $invoiceRepository->findById(request()->get('id'));
 
+        $this->heading = 'Send Invoice ' . $this->record->invoice_number . '/' . Carbon::parse($this->record->value_date)->format('Y');
+
         $this->form->fill([
             'email' => $this->record->company->email,
             'subject' => auth()->user()->company->invoice_email_subject ?? '',
@@ -61,10 +65,18 @@ class SendInvoice extends Page implements HasForms
     {
         $data = $this->form->getState();
 
-        $pdf = Pdf::loadView('invoices.pdf', ['invoice' => $this->record]);
+        $exportService = app(PdfExportService::class);
 
-//        $this->record
+        $data['invoice'] = $exportService->getInvoicePdf($this->record);
+        $data['invoice_filename'] = $exportService->getInvoiceFilename($this->record);
 
-        $this->notify('success', 'Invoice sent successfully!');
+        $this->record->client->notify(new \App\Notifications\SendInvoice($data));
+
+        $this->form->fill([]);
+
+        Notification::make()
+            ->success()
+            ->title('Invoice sent successfully!')
+            ->send();
     }
 }

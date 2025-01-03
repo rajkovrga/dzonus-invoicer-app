@@ -2,22 +2,13 @@
 
 namespace App\Services;
 
-use App\Contracts\Repositories\InvoiceRepositoryContract;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfExportService
 {
-    public function __construct(
-        protected InvoiceRepositoryContract $invoiceRepository,
-
-    )
-    {
-    }
-
     public function getInvoicePdf(Invoice|Model $invoice): string
     {
         $pdf = PDF::loadView('filament.pages.generates.pdf.invoice', compact('invoice'))

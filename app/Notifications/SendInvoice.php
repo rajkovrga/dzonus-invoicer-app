@@ -2,8 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,7 +14,9 @@ class SendInvoice extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(
+        private array $data = []
+    )
     {
         //
     }
@@ -35,9 +37,10 @@ class SendInvoice extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject($this->data['subject'])
+            ->view('emails.raw', ['content' => $this->data['message']])
+            ->attachData($this->data['invoice'], $this->data['invoice_filename'],
+                ['mime' => 'application/pdf']);
     }
 
     /**

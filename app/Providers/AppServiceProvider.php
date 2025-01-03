@@ -14,12 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(PdfExportService::class, function ($app) {
-            return new PdfExportService(
-                $app->make(InvoiceRepositoryContract::class)
-            );
-        });
-
     }
 
     /**
@@ -27,10 +21,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->singleton(PdfExportService::class, function ($app) {
-            return new PdfExportService(
-                $app->make(InvoiceRepositoryContract::class)
-            );
-        });
     }
 }
