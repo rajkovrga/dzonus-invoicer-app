@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\Currencies;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,8 @@ class InvoiceItem extends Model
         'price',
         'quantity',
         'unit_id',
-        'is_sale'
+        'is_sale',
+        'converted_price'
     ];
 
     public function invoice(): BelongsTo

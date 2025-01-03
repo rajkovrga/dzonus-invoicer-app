@@ -14,6 +14,7 @@ class Currency extends Model
         'arabic',
         'iso',
         'is_activated',
-        'symbol'
+        'symbol',
+        'exchange_rate',
     ];
 }

@@ -6,6 +6,7 @@ use App\Filament\Resources\InvoiceResource\Pages;
 use App\Models\Invoice;
 use App\Repositories\InvoiceRepository;
 use App\Tables\Columns\InvoiceNumber;
+use App\Utils\Currencies;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -91,6 +92,19 @@ class InvoiceResource extends Resource
                         ->label('Sale')
                         ->default(false)
                     ])
+                    ->mutateRelationshipDataBeforeCreateUsing(function ($state) {
+                        $invoice = auth()->user()->company->invoices->find($state['invoice_id']);
+
+                        if ($invoice && $invoice->currency->iso !== Currencies::RSD) {
+                            $exchangeRate = $invoice->currency->exchange_rate;
+                            $state['calculated_price'] = $state['price'] * $exchangeRate;
+
+                            return $state;
+                        }
+                        $state['calculated_price'] = $state['price'];
+
+                        return $state;
+                    })
                     ->columnSpan(2)
                     ->label('Invoice Items')
                     ->required()

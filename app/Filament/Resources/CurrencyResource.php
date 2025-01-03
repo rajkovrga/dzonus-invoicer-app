@@ -30,6 +30,8 @@ class CurrencyResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('symbol')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('exchange_rate')
+                    ->maxLength(255),
                 Forms\Components\Toggle::make('is_activated')
                     ->default(true),
             ]);
@@ -42,6 +44,8 @@ class CurrencyResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('iso')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('exchange_rate')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('symbol')
                     ->searchable(),

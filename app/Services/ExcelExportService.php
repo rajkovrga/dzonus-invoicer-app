@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Filament\Pages\Settings;
 use App\Models\Company;
+use App\Utils\Currencies;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -99,16 +100,16 @@ class ExcelExportService
             $sheet->setCellValue("B$row", Carbon::parse($invoice->value_date)->format('d.m.Y') . ' - ' . $invoice->company->name);
             $sheet->setCellValue("C$row",
                 round(
-                    $invoice->currency->iso !== 'RSD' ? $invoice->invoiceItems->where('is_sale', true)->sum('price') * setting($invoice->currency->iso . '_RSD')  : $invoice->invoiceItems->where('is_sale', true)->sum('price'),
+                    $invoice->invoiceItems->where('is_sale', true)->sum('converted_price'),
                     2)
             );
             $sheet->setCellValue("D$row",
                 round(
-                    $invoice->currency->iso !== 'RSD' ? $invoice->invoiceItems->where('is_sale', false)->sum('price') * setting($invoice->currency->iso . '_RSD')  : $invoice->invoiceItems->where('is_sale', true)->sum('price'),
-                    2)            );
+                    $invoice->invoiceItems->where('is_sale', false)->sum('converted_price'),
+                    2));
             $sheet->setCellValue("E$row",
                 round(
-                    $invoice->currency->iso !== 'RSD' ? $invoice->invoiceItems->sum('price') * setting($invoice->currency->iso . '_RSD')  : $invoice->invoiceItems->sum('price'),
+                    $invoice->invoiceItems->sum('converted_price'),
                     2)
             );
             $sheet->getStyle("A$row:E$row")->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);

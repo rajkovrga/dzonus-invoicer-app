@@ -123,6 +123,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('bank_accounts');
             $table->timestampsTz();
+            $table->softDeletesTz();
             $table->unique(['invoice_number', 'client_id', 'company_id']);
         });
 
@@ -145,6 +146,7 @@ return new class extends Migration {
                 ->default(1);
             $table->boolean('is_sale')
                 ->default(false);
+            $table->unsignedBigInteger('converted_price');
             $table->timestampsTz();
         });
 

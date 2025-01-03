@@ -20,12 +20,6 @@ class Settings extends BaseSettings
         return [
             Tabs::make('Settings')
                 ->schema([
-                    Tabs\Tab::make('Financials')
-                        ->schema([
-                            TextInput::make('financial.currencies.dinar.value')
-                                ->label('Dinarski kurs')
-                                ->required(),
-                        ]),
                 ]),
         ];
     }

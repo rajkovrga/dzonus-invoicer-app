@@ -19,6 +19,7 @@ class CurrencySeeder extends Seeder
             'iso' => 'EUR',
             'is_activated' => true,
             'symbol' => '€',
+            'exchange_rate' => 117.2
         ]);
 
         Currency::query()->create([
@@ -27,6 +28,7 @@ class CurrencySeeder extends Seeder
             'iso' => 'RSD',
             'is_activated' => true,
             'symbol' => 'дин.',
+            'exchange_rate' => 0
         ]);
     }
 }
