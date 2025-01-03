@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "outerweb/filament-settings": "^1.2",
+        "phpoffice/phpspreadsheet": "^1.29",
         "tomatophp/filament-locations": "^1.0"
     },
     "require-dev": {

@@ -33,7 +33,9 @@ class Company extends Model
         'is_active',
         'email',
         'zip_code',
-        'invoice_email_subject'
+        'invoice_email_subject',
+        'activity_code',
+        'activity_description',
     ];
 
     public function bankAccounts(): HasMany

@@ -29,8 +29,4 @@ class InvoiceRepository implements InvoiceRepositoryContract
             ->find($id);
     }
 
-    public function getCountOfInvoicesForCompanyByYear(Company $company, int $year): int
-    {
-        return $company->invoices()->whereYear('created_at', $year)->count();
-    }
 }

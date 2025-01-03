@@ -16,6 +16,7 @@ class InvoiceItem extends Model
         'price',
         'quantity',
         'unit_id',
+        'is_sale'
     ];
 
     public function invoice(): BelongsTo

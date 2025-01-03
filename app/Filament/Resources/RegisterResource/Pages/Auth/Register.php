@@ -40,6 +40,13 @@ class Register extends BaseRegister
                         Forms\Components\TextInput::make('registration_number')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('activity_code')
+                            ->required()
+                            ->numeric()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('activity_description')
+                            ->required()
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('tax_id')
                             ->maxLength(255),
                         Forms\Components\DateTimePicker::make('registration_date')

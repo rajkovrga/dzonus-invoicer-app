@@ -28,6 +28,8 @@ class CompanyFactory extends Factory
             'city' => fake()->city,
             'zip_code' => fake()->postcode,
             'email' => fake()->safeEmail,
+            'activity_code' => fake()->numberBetween(1000,9999),
+            'activity_description' => fake()->text(45),
         ];
     }
 }

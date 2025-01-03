@@ -27,7 +27,9 @@ class UserSeeder extends Seeder
             'registration_date' => Carbon::create('2022', '12', '29')
                 ->toString(),
             'email' => 'rajko@vrga.dev',
-            'zip_code' => '11081'
+            'zip_code' => '11081',
+            'activity_code' => '6209',
+            'activity_description' => 'Ostale informacione usluge',
         ]);
 
         $user = User::create([

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Repositories\InvoiceRepository;
 use App\Services\PdfExportService;
 use Filament\Actions;
 use Filament\Infolists\Components\RepeatableEntry;
@@ -69,6 +70,8 @@ class ViewInvoice extends ViewRecord
 
     public function generatePdf(): StreamedResponse
     {
-        return $this->pdfExportService->invoice($this->record->id);
+        return response()->streamDownload(function () {
+            echo $this->pdfExportService->getInvoicePdf($this->record);
+        }, $this->pdfExportService->getInvoiceFileName($this->record));
     }
 }

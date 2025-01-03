@@ -3,13 +3,16 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Pages\Settings;
 use App\Filament\Resources\RegisterResource\Pages\Auth\Register;
+use Filament\Forms\Components\TextInput;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Resources\Components\Tab;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -20,6 +23,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Outerweb\FilamentSettings\Filament\Plugins\FilamentSettingsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,8 +59,11 @@ class AdminPanelProvider extends PanelProvider
                     )
                     ->enableTwoFactorAuthentication()
                     ->enableSanctumTokens(),
-                FilamentSpatieRolesPermissionsPlugin::make()
-
+                FilamentSpatieRolesPermissionsPlugin::make(),
+                FilamentSettingsPlugin::make()
+                    ->pages([
+                        Settings::class
+                    ])
             ])
             ->middleware([
                 EncryptCookies::class,

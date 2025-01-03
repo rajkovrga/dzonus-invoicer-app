@@ -32,6 +32,8 @@ return new class extends Migration {
             $table->string('tax_id')
                 ->unique()
                 ->nullable();
+            $table->string('activity_code');
+            $table->string('activity_description');
             $table->dateTimeTz('registration_date');
             $table->string('registration_agent')
                 ->unique()
@@ -141,6 +143,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('price');
             $table->integer('quantity')
                 ->default(1);
+            $table->boolean('is_sale')
+                ->default(false);
             $table->timestampsTz();
         });
 

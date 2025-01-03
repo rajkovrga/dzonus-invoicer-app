@@ -11,10 +11,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Validation\Rule;
 
 class InvoiceResource extends Resource
@@ -89,6 +87,9 @@ class InvoiceResource extends Resource
                             ->relationship('unit', 'name')
                             ->required()
                             ->label('Unit'),
+                        Forms\Components\Checkbox::make('is_sale')
+                        ->label('Sale')
+                        ->default(false)
                     ])
                     ->columnSpan(2)
                     ->label('Invoice Items')

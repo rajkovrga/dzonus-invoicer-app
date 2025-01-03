@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
       'client_id',
@@ -20,7 +21,7 @@ class Invoice extends Model
       'trading_place',
       'dated',
       'company_id',
-        'bank_account_id'
+      'bank_account_id',
     ];
 
     public function invoiceItems(): HasMany {
